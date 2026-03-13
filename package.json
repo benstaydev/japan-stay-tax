@@ -1,0 +1,53 @@
+{
+  "name": "japan-stay-tax",
+  "version": "0.1.0",
+  "description": "Calculate Japan accommodation tax (宿泊税) for any municipality. Accurate, typed, and always up-to-date.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./data": {
+      "types": "./dist/data.d.ts",
+      "import": "./dist/data.js",
+      "require": "./dist/data.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "data"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "japan",
+    "accommodation-tax",
+    "lodging-tax",
+    "宿泊税",
+    "hotel",
+    "travel",
+    "tourism",
+    "hospitality"
+  ],
+  "author": "Ben Stay Dev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benstaydev/japan-stay-tax"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "vitest": "^2.0.0"
+  }
+}
