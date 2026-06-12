@@ -1684,11 +1684,12 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.02,
         cap: 2000,
+        baseRoundDownTo: 1000,
       },
     ],
     exemptions: ["school_trips", "student_competitions"],
     notes:
-      "Japan's first prefecture-level percentage tax: 2% of the per-person room-only rate, capped at 2,000 yen (tax base capped at 100,000 yen). In Miyakojima, Ishigaki, Onna, Motobu and Chatan the prefectural rate is 0.8% plus a municipal 1.2% — use their dedicated entries. Official guidance rounds the tax base down to the nearest 1,000 yen; this calculator applies the rate to the raw rate per night.",
+      "Japan's first prefecture-level percentage tax: 2% of the per-person room-only rate, capped at 2,000 yen. The tax base is rounded down to the nearest 1,000 yen (1,000円未満切捨, e.g. an 8,500 yen stay is taxed as 8,000 → 160 yen) and capped at 100,000 yen — the 2,000 yen tax cap encodes the base cap. In Miyakojima, Ishigaki, Onna, Motobu and Chatan the prefectural rate is 0.8% plus a municipal 1.2% — use their dedicated entries.",
     source:
       "https://www.pref.okinawa.jp/kurashikankyo/zeikin/1003660/1036559/1036550.html",
   },
@@ -1709,6 +1710,7 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.008,
         cap: 800,
+        baseRoundDownTo: 1000,
       },
       {
         authority: { en: "Miyakojima City", ja: "宮古島市" },
@@ -1717,11 +1719,12 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.012,
         cap: 1200,
+        baseRoundDownTo: 1000,
       },
     ],
     exemptions: ["school_trips", "student_competitions"],
     notes:
-      "Combined 2% capped at 2,000 yen (prefecture 0.8%/800 + city 1.2%/1,200). Official guidance rounds the tax base down to the nearest 1,000 yen; this calculator applies the rates to the raw rate per night.",
+      "Combined 2% capped at 2,000 yen (prefecture 0.8%/800 + city 1.2%/1,200). The tax base is rounded down to the nearest 1,000 yen.",
     source:
       "https://www.city.miyakojima.lg.jp/soshiki/shityo/soumubu/zeimu/oshirase/2026-0310-2107-48.html",
   },
@@ -1742,6 +1745,7 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.008,
         cap: 800,
+        baseRoundDownTo: 1000,
       },
       {
         authority: { en: "Ishigaki City", ja: "石垣市" },
@@ -1750,6 +1754,7 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.012,
         cap: 1200,
+        baseRoundDownTo: 1000,
       },
     ],
     exemptions: ["school_trips", "student_competitions"],
@@ -1775,6 +1780,7 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.008,
         cap: 800,
+        baseRoundDownTo: 1000,
       },
       {
         authority: { en: "Onna Village", ja: "恩納村" },
@@ -1783,6 +1789,7 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.012,
         cap: 1200,
+        baseRoundDownTo: 1000,
       },
     ],
     exemptions: ["school_trips", "student_competitions"],
@@ -1807,6 +1814,7 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.008,
         cap: 800,
+        baseRoundDownTo: 1000,
       },
       {
         authority: { en: "Motobu Town", ja: "本部町" },
@@ -1815,6 +1823,7 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.012,
         cap: 1200,
+        baseRoundDownTo: 1000,
       },
     ],
     exemptions: ["school_trips", "student_competitions"],
@@ -1839,6 +1848,7 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.008,
         cap: 800,
+        baseRoundDownTo: 1000,
       },
       {
         authority: { en: "Chatan Town", ja: "北谷町" },
@@ -1847,6 +1857,7 @@ export const taxAreas: TaxArea[] = [
         type: "percentage",
         rate: 0.012,
         cap: 1200,
+        baseRoundDownTo: 1000,
       },
     ],
     exemptions: ["school_trips", "student_competitions"],

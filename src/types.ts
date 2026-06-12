@@ -30,6 +30,12 @@ export interface TaxRule {
    * (Fixed-type rules encode this as a 0-amount tier instead.)
    */
   threshold?: number;
+  /**
+   * For percentage-type taxes: round the tax base down to the nearest
+   * multiple of this value before applying the rate
+   * (e.g. 1000 for Okinawa's 1,000円未満切捨て).
+   */
+  baseRoundDownTo?: number;
 }
 
 /** A geographic area where accommodation tax applies */

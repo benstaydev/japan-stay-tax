@@ -530,6 +530,23 @@ describe("calculateTax", () => {
       expect(r.total).toBe(2000);
     });
 
+    it("tax base rounds down to nearest 1,000 yen (official example: 8,500 → 160)", () => {
+      const r = calculateTax({ areaId: "okinawa_other", ratePerNight: 8500, date });
+      expect(r.total).toBe(160);
+    });
+
+    it("tax base rounding: 10,999 taxed as 10,000 → 200", () => {
+      const r = calculateTax({ areaId: "okinawa_other", ratePerNight: 10999, date });
+      expect(r.total).toBe(200);
+    });
+
+    it("municipal split also rounds the base (Miyakojima 8,500 → 64 + 96)", () => {
+      const r = calculateTax({ areaId: "miyakojima", ratePerNight: 8500, date });
+      expect(r.breakdown[0].amount).toBe(64);
+      expect(r.breakdown[1].amount).toBe(96);
+      expect(r.total).toBe(160);
+    });
+
     it("Miyakojima: 0.8% + 1.2% = 2% split across authorities", () => {
       const r = calculateTax({ areaId: "miyakojima", ratePerNight: 10000, date });
       expect(r.total).toBe(200);

@@ -54,7 +54,11 @@ function isRuleActive(rule: TaxRule, dateStr: string): boolean {
 function calculateRuleAmount(rule: TaxRule, ratePerNight: number): number {
   if (rule.type === "percentage") {
     if (rule.threshold != null && ratePerNight < rule.threshold) return 0;
-    const amount = Math.floor(ratePerNight * (rule.rate ?? 0));
+    let base = ratePerNight;
+    if (rule.baseRoundDownTo != null && rule.baseRoundDownTo > 0) {
+      base = Math.floor(base / rule.baseRoundDownTo) * rule.baseRoundDownTo;
+    }
+    const amount = Math.floor(base * (rule.rate ?? 0));
     if (rule.cap != null) return Math.min(amount, rule.cap);
     return amount;
   }
