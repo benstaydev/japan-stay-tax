@@ -282,6 +282,269 @@ describe("calculateTax", () => {
   });
 
   // ===========================================
+  // NISEKO (boundary fix + prefecture stacking + Nov 2026 switch)
+  // ===========================================
+  describe("Niseko", () => {
+    it("town tax only before April 2026", () => {
+      const r = calculateTax({
+        areaId: "niseko",
+        ratePerNight: 10000,
+        date: "2026-03-01",
+      });
+      expect(r.total).toBe(200);
+      expect(r.breakdown).toHaveLength(1);
+    });
+
+    it("exactly 5,000 yen is in the 100 yen town tier", () => {
+      const r = calculateTax({
+        areaId: "niseko",
+        ratePerNight: 5000,
+        date: "2026-03-01",
+      });
+      expect(r.total).toBe(100);
+    });
+
+    it("prefecture tax stacks Apr-Oct 2026 (10,000 yen → 200 + 100)", () => {
+      const r = calculateTax({
+        areaId: "niseko",
+        ratePerNight: 10000,
+        date: "2026-05-01",
+      });
+      expect(r.total).toBe(300);
+      expect(r.breakdown).toHaveLength(2);
+    });
+
+    it("combined 2,500 yen for 100,000+ during stacking period", () => {
+      const r = calculateTax({
+        areaId: "niseko",
+        ratePerNight: 120000,
+        date: "2026-05-01",
+      });
+      expect(r.total).toBe(2500);
+    });
+
+    it("flat 3% (incl. prefecture share) from November 2026", () => {
+      const r = calculateTax({
+        areaId: "niseko",
+        ratePerNight: 30000,
+        date: "2026-11-15",
+      });
+      expect(r.total).toBe(900);
+      expect(r.breakdown).toHaveLength(1);
+      expect(r.breakdown[0].type).toBe("percentage");
+    });
+  });
+
+  // ===========================================
+  // NEW HOKKAIDO MUNICIPALITIES (April 2026)
+  // ===========================================
+  describe("new Hokkaido municipalities", () => {
+    const date = "2026-05-01";
+
+    it("Akaigawa: village tax alone before April 2026", () => {
+      const r = calculateTax({
+        areaId: "akaigawa",
+        ratePerNight: 10000,
+        date: "2025-12-01",
+      });
+      expect(r.total).toBe(200);
+    });
+
+    it("Akaigawa: below 8,000 only prefecture tax applies", () => {
+      const r = calculateTax({ areaId: "akaigawa", ratePerNight: 7000, date });
+      expect(r.total).toBe(100);
+    });
+
+    it("Akaigawa: 50,000+ combined 1,000 yen", () => {
+      const r = calculateTax({ areaId: "akaigawa", ratePerNight: 60000, date });
+      expect(r.total).toBe(1000);
+    });
+
+    it("Rusutsu: combined 200/400/1,000", () => {
+      expect(calculateTax({ areaId: "rusutsu", ratePerNight: 10000, date }).total).toBe(200);
+      expect(calculateTax({ areaId: "rusutsu", ratePerNight: 30000, date }).total).toBe(400);
+      expect(calculateTax({ areaId: "rusutsu", ratePerNight: 60000, date }).total).toBe(1000);
+    });
+
+    it("Toyako: combined 300/700/1,500", () => {
+      expect(calculateTax({ areaId: "toyako", ratePerNight: 10000, date }).total).toBe(300);
+      expect(calculateTax({ areaId: "toyako", ratePerNight: 30000, date }).total).toBe(700);
+      expect(calculateTax({ areaId: "toyako", ratePerNight: 60000, date }).total).toBe(1500);
+    });
+
+    it("Shintoku: 50 yen tier exists (under 5,000 combined 150)", () => {
+      const r = calculateTax({ areaId: "shintoku", ratePerNight: 4000, date });
+      expect(r.total).toBe(150);
+    });
+
+    it("flat-200 cities: combined 300/400/700 (Kushiro)", () => {
+      expect(calculateTax({ areaId: "kushiro", ratePerNight: 10000, date }).total).toBe(300);
+      expect(calculateTax({ areaId: "kushiro", ratePerNight: 30000, date }).total).toBe(400);
+      expect(calculateTax({ areaId: "kushiro", ratePerNight: 60000, date }).total).toBe(700);
+    });
+  });
+
+  // ===========================================
+  // NAGANO (June 2026, introductory vs standard rates)
+  // ===========================================
+  describe("Nagano", () => {
+    it("prefecture (other areas): exempt under 6,000, 200 yen introductory", () => {
+      expect(
+        calculateTax({ areaId: "nagano_other", ratePerNight: 5999, date: "2026-07-01" }).total,
+      ).toBe(0);
+      expect(
+        calculateTax({ areaId: "nagano_other", ratePerNight: 10000, date: "2026-07-01" }).total,
+      ).toBe(200);
+    });
+
+    it("prefecture (other areas): 300 yen from June 2029", () => {
+      const r = calculateTax({
+        areaId: "nagano_other",
+        ratePerNight: 10000,
+        date: "2029-06-01",
+      });
+      expect(r.total).toBe(300);
+    });
+
+    it("Matsumoto: combined 200 introductory, 300 standard", () => {
+      expect(
+        calculateTax({ areaId: "matsumoto", ratePerNight: 10000, date: "2026-07-01" }).total,
+      ).toBe(200);
+      expect(
+        calculateTax({ areaId: "matsumoto", ratePerNight: 10000, date: "2029-07-01" }).total,
+      ).toBe(300);
+    });
+
+    it("Karuizawa: combined 200/250/700 introductory", () => {
+      const date = "2026-07-01";
+      expect(calculateTax({ areaId: "karuizawa", ratePerNight: 8000, date }).total).toBe(200);
+      expect(calculateTax({ areaId: "karuizawa", ratePerNight: 50000, date }).total).toBe(250);
+      expect(calculateTax({ areaId: "karuizawa", ratePerNight: 150000, date }).total).toBe(700);
+    });
+
+    it("Karuizawa: combined 300/350/800 from June 2029", () => {
+      const date = "2029-07-01";
+      expect(calculateTax({ areaId: "karuizawa", ratePerNight: 8000, date }).total).toBe(300);
+      expect(calculateTax({ areaId: "karuizawa", ratePerNight: 50000, date }).total).toBe(350);
+      expect(calculateTax({ areaId: "karuizawa", ratePerNight: 150000, date }).total).toBe(800);
+    });
+
+    it("Hakuba: combined 200/400/900/1,900 introductory", () => {
+      const date = "2026-07-01";
+      expect(calculateTax({ areaId: "hakuba", ratePerNight: 10000, date }).total).toBe(200);
+      expect(calculateTax({ areaId: "hakuba", ratePerNight: 30000, date }).total).toBe(400);
+      expect(calculateTax({ areaId: "hakuba", ratePerNight: 70000, date }).total).toBe(900);
+      expect(calculateTax({ areaId: "hakuba", ratePerNight: 120000, date }).total).toBe(1900);
+    });
+
+    it("Nozawaonsen: 3.5% + prefecture 100 introductory", () => {
+      const r = calculateTax({
+        areaId: "nozawaonsen",
+        ratePerNight: 10000,
+        date: "2026-07-01",
+      });
+      // 10,000 * 3.5% = 350 village + 100 prefecture
+      expect(r.total).toBe(450);
+    });
+
+    it("Nozawaonsen: exempt under 6,000 (percentage threshold)", () => {
+      const r = calculateTax({
+        areaId: "nozawaonsen",
+        ratePerNight: 5000,
+        date: "2026-07-01",
+      });
+      expect(r.total).toBe(0);
+    });
+
+    it("Nozawaonsen: 5% + prefecture 150 from June 2029", () => {
+      const r = calculateTax({
+        areaId: "nozawaonsen",
+        ratePerNight: 10000,
+        date: "2029-07-01",
+      });
+      expect(r.total).toBe(650);
+    });
+  });
+
+  // ===========================================
+  // KUMAMOTO / MIYAZAKI (July 2026), MORIOKA / NASU (October 2026)
+  // ===========================================
+  describe("July and October 2026 launches", () => {
+    it("Kumamoto: no tax before July 2026, then flat 200", () => {
+      expect(
+        calculateTax({ areaId: "kumamoto", ratePerNight: 10000, date: "2026-06-30" }).total,
+      ).toBe(0);
+      expect(
+        calculateTax({ areaId: "kumamoto", ratePerNight: 3000, date: "2026-07-01" }).total,
+      ).toBe(200);
+    });
+
+    it("Miyazaki: flat 200 from July 2026", () => {
+      expect(
+        calculateTax({ areaId: "miyazaki", ratePerNight: 50000, date: "2026-07-01" }).total,
+      ).toBe(200);
+    });
+
+    it("Morioka: flat 200 from October 2026", () => {
+      expect(
+        calculateTax({ areaId: "morioka", ratePerNight: 8000, date: "2026-09-30" }).total,
+      ).toBe(0);
+      expect(
+        calculateTax({ areaId: "morioka", ratePerNight: 8000, date: "2026-10-01" }).total,
+      ).toBe(200);
+    });
+
+    it("Nasu: six tiers", () => {
+      const date = "2026-10-15";
+      expect(calculateTax({ areaId: "nasu", ratePerNight: 9999, date }).total).toBe(100);
+      expect(calculateTax({ areaId: "nasu", ratePerNight: 15000, date }).total).toBe(300);
+      expect(calculateTax({ areaId: "nasu", ratePerNight: 25000, date }).total).toBe(500);
+      expect(calculateTax({ areaId: "nasu", ratePerNight: 40000, date }).total).toBe(800);
+      expect(calculateTax({ areaId: "nasu", ratePerNight: 75000, date }).total).toBe(1500);
+      expect(calculateTax({ areaId: "nasu", ratePerNight: 100000, date }).total).toBe(3000);
+    });
+  });
+
+  // ===========================================
+  // OKINAWA (February 2027, percentage with caps)
+  // ===========================================
+  describe("Okinawa (from February 2027)", () => {
+    const date = "2027-03-01";
+
+    it("no tax before February 2027", () => {
+      const r = calculateTax({
+        areaId: "okinawa_other",
+        ratePerNight: 10000,
+        date: "2026-12-01",
+      });
+      expect(r.total).toBe(0);
+    });
+
+    it("prefecture: 2% of rate", () => {
+      const r = calculateTax({ areaId: "okinawa_other", ratePerNight: 10000, date });
+      expect(r.total).toBe(200);
+    });
+
+    it("prefecture: capped at 2,000 yen", () => {
+      const r = calculateTax({ areaId: "okinawa_other", ratePerNight: 150000, date });
+      expect(r.total).toBe(2000);
+    });
+
+    it("Miyakojima: 0.8% + 1.2% = 2% split across authorities", () => {
+      const r = calculateTax({ areaId: "miyakojima", ratePerNight: 10000, date });
+      expect(r.total).toBe(200);
+      expect(r.breakdown).toHaveLength(2);
+      expect(r.breakdown[0].amount).toBe(80); // prefecture 0.8%
+      expect(r.breakdown[1].amount).toBe(120); // city 1.2%
+    });
+
+    it("Miyakojima: caps at 800 + 1,200 = 2,000 yen", () => {
+      const r = calculateTax({ areaId: "miyakojima", ratePerNight: 200000, date });
+      expect(r.total).toBe(2000);
+    });
+  });
+
+  // ===========================================
   // ERROR HANDLING
   // ===========================================
   describe("error handling", () => {

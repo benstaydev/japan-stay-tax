@@ -24,6 +24,12 @@ export interface TaxRule {
   rate?: number;
   /** Maximum amount in JPY for percentage-type taxes, null = no cap */
   cap?: number | null;
+  /**
+   * Exemption floor (免税点) in JPY for percentage-type taxes.
+   * Stays priced below this are exempt from this rule.
+   * (Fixed-type rules encode this as a 0-amount tier instead.)
+   */
+  threshold?: number;
 }
 
 /** A geographic area where accommodation tax applies */
