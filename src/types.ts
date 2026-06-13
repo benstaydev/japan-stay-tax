@@ -48,6 +48,20 @@ export interface TaxArea {
   prefecture: { en: string; ja: string };
   /** Administrative level */
   level: "prefecture" | "city" | "town" | "village" | "ward";
+  /**
+   * Tax base unit — tells a consumer how the taxable charge relates to guests, so
+   * it knows whether to multiply a per-night result by guest count for a stay total.
+   *
+   * - "per_person" (default for almost all of Japan): tax is levied per guest per
+   *   night; `ratePerNight` is the per-person charge, and a multi-guest stay total
+   *   multiplies the per-night tax by the number of guests.
+   * - "per_unit": tax is levied per room/building regardless of guest count.
+   * - "variable": the facility chooses the base — per person, per room, or per
+   *   building — and prices accordingly (currently only Kutchan). The caller passes
+   *   the applicable taxable charge as `ratePerNight`; a consumer must not assume
+   *   per-person and must not auto-multiply by guest count.
+   */
+  taxBase: "per_person" | "per_unit" | "variable";
   /** All tax rules that apply in this area (may include prefecture + city taxes) */
   rules: TaxRule[];
   /** Known exemption categories */

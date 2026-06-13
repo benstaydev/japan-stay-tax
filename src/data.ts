@@ -12,6 +12,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Tokyo", ja: "東京都" },
     prefecture: { en: "Tokyo", ja: "東京都" },
     level: "prefecture",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Tokyo Metropolitan Government", ja: "東京都" },
@@ -39,6 +40,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Osaka", ja: "大阪府" },
     prefecture: { en: "Osaka", ja: "大阪府" },
     level: "prefecture",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Osaka Prefecture", ja: "大阪府" },
@@ -67,6 +69,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Kyoto", ja: "京都市" },
     prefecture: { en: "Kyoto", ja: "京都府" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Kyoto City", ja: "京都市" },
@@ -107,6 +110,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Kanazawa", ja: "金沢市" },
     prefecture: { en: "Ishikawa", ja: "石川県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Kanazawa City", ja: "金沢市" },
@@ -134,6 +138,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Kutchan", ja: "倶知安町" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "town",
+    taxBase: "variable",
     rules: [
       {
         authority: { en: "Kutchan Town", ja: "倶知安町" },
@@ -167,6 +172,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Fukuoka City", ja: "福岡市" },
     prefecture: { en: "Fukuoka", ja: "福岡県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Fukuoka Prefecture", ja: "福岡県" },
@@ -200,6 +206,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Kitakyushu", ja: "北九州市" },
     prefecture: { en: "Fukuoka", ja: "福岡県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Fukuoka Prefecture", ja: "福岡県" },
@@ -230,6 +237,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Fukuoka Prefecture (other areas)", ja: "福岡県（その他地域）" },
     prefecture: { en: "Fukuoka", ja: "福岡県" },
     level: "prefecture",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Fukuoka Prefecture", ja: "福岡県" },
@@ -253,6 +261,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Nagasaki", ja: "長崎市" },
     prefecture: { en: "Nagasaki", ja: "長崎県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Nagasaki City", ja: "長崎市" },
@@ -280,6 +289,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Niseko", ja: "ニセコ町" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "town",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Niseko Town", ja: "ニセコ町" },
@@ -328,6 +338,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Tokoname", ja: "常滑市" },
     prefecture: { en: "Aichi", ja: "愛知県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Tokoname City", ja: "常滑市" },
@@ -351,6 +362,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Atami", ja: "熱海市" },
     prefecture: { en: "Shizuoka", ja: "静岡県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Atami City", ja: "熱海市" },
@@ -374,6 +386,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Takayama", ja: "高山市" },
     prefecture: { en: "Gifu", ja: "岐阜県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Takayama City", ja: "高山市" },
@@ -401,6 +414,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Gero", ja: "下呂市" },
     prefecture: { en: "Gifu", ja: "岐阜県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Gero City", ja: "下呂市" },
@@ -426,6 +440,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Matsue", ja: "松江市" },
     prefecture: { en: "Shimane", ja: "島根県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Matsue City", ja: "松江市" },
@@ -452,6 +467,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Hirosaki", ja: "弘前市" },
     prefecture: { en: "Aomori", ja: "青森県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hirosaki City", ja: "弘前市" },
@@ -475,6 +491,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Sendai", ja: "仙台市" },
     prefecture: { en: "Miyagi", ja: "宮城県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Miyagi Prefecture", ja: "宮城県" },
@@ -514,6 +531,7 @@ export const taxAreas: TaxArea[] = [
     },
     prefecture: { en: "Miyagi", ja: "宮城県" },
     level: "prefecture",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Miyagi Prefecture", ja: "宮城県" },
@@ -539,6 +557,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Hiroshima Prefecture", ja: "広島県" },
     prefecture: { en: "Hiroshima", ja: "広島県" },
     level: "prefecture",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hiroshima Prefecture", ja: "広島県" },
@@ -568,6 +587,7 @@ export const taxAreas: TaxArea[] = [
     },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "prefecture",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -595,6 +615,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Sapporo", ja: "札幌市" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -633,6 +654,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Hakodate", ja: "函館市" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -672,6 +694,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Otaru", ja: "小樽市" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -709,6 +732,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Furano", ja: "富良野市" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -747,6 +771,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Akaigawa", ja: "赤井川村" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "village",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Akaigawa Village", ja: "赤井川村" },
@@ -786,6 +811,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Rusutsu", ja: "留寿都村" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "village",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -823,6 +849,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Toyako", ja: "洞爺湖町" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "town",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -862,6 +889,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Asahikawa", ja: "旭川市" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -897,6 +925,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Shimukappu", ja: "占冠村" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "village",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -936,6 +965,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Kitami", ja: "北見市" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -971,6 +1001,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Abashiri", ja: "網走市" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -1005,6 +1036,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Koshimizu", ja: "小清水町" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "town",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -1039,6 +1071,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Obihiro", ja: "帯広市" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -1074,6 +1107,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Otofuke", ja: "音更町" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "town",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -1109,6 +1143,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Shintoku", ja: "新得町" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "town",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -1148,6 +1183,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Kushiro", ja: "釧路市" },
     prefecture: { en: "Hokkaido", ja: "北海道" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Hokkaido Prefecture", ja: "北海道" },
@@ -1183,6 +1219,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Toba", ja: "鳥羽市" },
     prefecture: { en: "Mie", ja: "三重県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Toba City", ja: "鳥羽市" },
@@ -1206,6 +1243,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Gifu", ja: "岐阜市" },
     prefecture: { en: "Gifu", ja: "岐阜県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Gifu City", ja: "岐阜市" },
@@ -1229,6 +1267,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Yugawara", ja: "湯河原町" },
     prefecture: { en: "Kanagawa", ja: "神奈川県" },
     level: "town",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Yugawara Town", ja: "湯河原町" },
@@ -1257,6 +1296,7 @@ export const taxAreas: TaxArea[] = [
     },
     prefecture: { en: "Nagano", ja: "長野県" },
     level: "prefecture",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Nagano Prefecture", ja: "長野県" },
@@ -1293,6 +1333,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Matsumoto", ja: "松本市" },
     prefecture: { en: "Nagano", ja: "長野県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Nagano Prefecture", ja: "長野県" },
@@ -1349,6 +1390,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Karuizawa", ja: "軽井沢町" },
     prefecture: { en: "Nagano", ja: "長野県" },
     level: "town",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Nagano Prefecture", ja: "長野県" },
@@ -1409,6 +1451,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Achi", ja: "阿智村" },
     prefecture: { en: "Nagano", ja: "長野県" },
     level: "village",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Nagano Prefecture", ja: "長野県" },
@@ -1455,6 +1498,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Hakuba", ja: "白馬村" },
     prefecture: { en: "Nagano", ja: "長野県" },
     level: "village",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Nagano Prefecture", ja: "長野県" },
@@ -1518,6 +1562,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Nozawaonsen", ja: "野沢温泉村" },
     prefecture: { en: "Nagano", ja: "長野県" },
     level: "village",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Nagano Prefecture", ja: "長野県" },
@@ -1573,6 +1618,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Kumamoto", ja: "熊本市" },
     prefecture: { en: "Kumamoto", ja: "熊本県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Kumamoto City", ja: "熊本市" },
@@ -1596,6 +1642,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Miyazaki", ja: "宮崎市" },
     prefecture: { en: "Miyazaki", ja: "宮崎県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Miyazaki City", ja: "宮崎市" },
@@ -1620,6 +1667,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Morioka", ja: "盛岡市" },
     prefecture: { en: "Iwate", ja: "岩手県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Morioka City", ja: "盛岡市" },
@@ -1643,6 +1691,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Nasu", ja: "那須町" },
     prefecture: { en: "Tochigi", ja: "栃木県" },
     level: "town",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Nasu Town", ja: "那須町" },
@@ -1676,6 +1725,7 @@ export const taxAreas: TaxArea[] = [
     },
     prefecture: { en: "Okinawa", ja: "沖縄県" },
     level: "prefecture",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Okinawa Prefecture", ja: "沖縄県" },
@@ -1702,6 +1752,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Miyakojima", ja: "宮古島市" },
     prefecture: { en: "Okinawa", ja: "沖縄県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Okinawa Prefecture", ja: "沖縄県" },
@@ -1737,6 +1788,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Ishigaki", ja: "石垣市" },
     prefecture: { en: "Okinawa", ja: "沖縄県" },
     level: "city",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Okinawa Prefecture", ja: "沖縄県" },
@@ -1772,6 +1824,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Onna", ja: "恩納村" },
     prefecture: { en: "Okinawa", ja: "沖縄県" },
     level: "village",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Okinawa Prefecture", ja: "沖縄県" },
@@ -1806,6 +1859,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Motobu", ja: "本部町" },
     prefecture: { en: "Okinawa", ja: "沖縄県" },
     level: "town",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Okinawa Prefecture", ja: "沖縄県" },
@@ -1840,6 +1894,7 @@ export const taxAreas: TaxArea[] = [
     name: { en: "Chatan", ja: "北谷町" },
     prefecture: { en: "Okinawa", ja: "沖縄県" },
     level: "town",
+    taxBase: "per_person",
     rules: [
       {
         authority: { en: "Okinawa Prefecture", ja: "沖縄県" },

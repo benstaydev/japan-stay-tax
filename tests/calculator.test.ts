@@ -593,3 +593,25 @@ describe("calculateTax", () => {
     });
   });
 });
+
+describe("taxBase", () => {
+  it("every area declares a valid taxBase", () => {
+    for (const area of getAllAreas()) {
+      expect(
+        area.taxBase,
+        `area "${area.id}" is missing taxBase`,
+      ).toMatch(/^(per_person|per_unit|variable)$/);
+    }
+  });
+
+  it("Kutchan is the variable-base exception; mainstream areas are per-person", () => {
+    // Kutchan uniquely lets the facility choose per-person / per-room / per-building
+    // (see data.ts notes), so its base is "variable". Niseko switched to a flat 3% of
+    // the per-person rate, so it is "per_person" like the rest of the country.
+    expect(getArea("kutchan")!.taxBase).toBe("variable");
+    expect(getArea("niseko")!.taxBase).toBe("per_person");
+    expect(getArea("tokyo")!.taxBase).toBe("per_person");
+    expect(getArea("kyoto")!.taxBase).toBe("per_person");
+    expect(getArea("osaka")!.taxBase).toBe("per_person");
+  });
+});
