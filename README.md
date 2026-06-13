@@ -66,6 +66,14 @@ searchAreas("京都");
 
 **ほとんどの自治体では、宿泊税は1人1泊あたりに課税されます。** これらのエリアでは `ratePerNight` に **1人1泊あたりの料金** を指定してください。
 
+Each area exposes this as a `taxBase` field, so you can branch on it programmatically instead of hard-coding the Kutchan exception:
+
+`taxBase` フィールドで課税標準の種類を判別できるため、倶知安の例外をハードコードせずにプログラムで分岐できます：
+
+- `"per_person"` — tax is per guest per night (almost all of Japan); multiply the per-night result by the guest count for a stay total. / 1人1泊あたり（日本のほぼ全域）。1泊分の結果に人数を掛けると宿泊全体の税額になります。
+- `"per_unit"` — tax is per room/building regardless of guests (none currently). / 人数に関係なく1室・1棟あたり（現在該当なし）。
+- `"variable"` — the facility chooses the base (currently only Kutchan); pass the applicable charge and do **not** auto-multiply by guest count. / 施設が課税標準を選択（現在は倶知安のみ）。該当する料金を渡し、人数で自動的に掛けないでください。
+
 ### Exception: Kutchan (Niseko) / 例外：倶知安町（ニセコ）
 
 Kutchan is the only municipality that allows the tax base to be **per person, per room, or per building** — whichever matches how the facility prices its accommodation. This is because ~70% of Kutchan's accommodation stock is condominiums and whole-unit rentals that price per room/building, not per person. Pass the applicable unit price as `ratePerNight`.
@@ -167,6 +175,26 @@ Search areas by name (English or Japanese) or prefecture.
 ### `getAllAreas(): TaxArea[]`
 
 Get all tax areas with full details. / 全エリアの詳細情報を返します。
+
+### `getChangelogSince(sinceSeq): ChangelogEntry[]`
+
+Return dataset changes with a sequence number greater than `sinceSeq`, oldest first. Each release appends immutable, sequenced entries describing exactly which areas changed and why, so a consumer can store the last `seq` it saw and pull only what's new (corrections add a new entry that `supersedes` the old `seq` rather than editing it). Pass `0` for the full history.
+
+`sinceSeq` より大きい連番を持つデータ変更を古い順に返します。各リリースで「どのエリアが・なぜ変わったか」を表す不変の連番エントリを追記するため、最後に取得した `seq` を保存しておけば差分だけを取得できます（修正は既存エントリを編集せず、`supersedes` 付きの新エントリを追加します）。全履歴を取得するには `0` を渡してください。
+
+```typescript
+import { getChangelogSince, changelog } from "japan-stay-tax";
+
+// Everything since the version you last synced
+// 前回同期したバージョン以降の全変更
+const updates = getChangelogSince(lastSeenSeq);
+// → [{ seq, releasedAt, dataVersion, areaIds, type, summary: { en, ja }, effectiveFrom, sources }, ...]
+
+// Or read the full log directly / 全ログを直接参照
+changelog.length; // current number of entries / 現在のエントリ数
+```
+
+The `changelog` array is also exported directly for the full, ordered history. / 全履歴は `changelog` 配列としても直接エクスポートされています。
 
 ## Covered Municipalities / 対応自治体一覧
 
