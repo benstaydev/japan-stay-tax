@@ -103,3 +103,25 @@ export interface CalculateOptions {
   /** Date of stay (ISO date string). Defaults to today. Used to select applicable rules. */
   date?: string;
 }
+
+/** One published change to the tax dataset. Entries are immutable once shipped. */
+export interface ChangelogEntry {
+  /** Monotonic integer assigned at release; the stable cursor for change feeds. */
+  seq: number;
+  /** Release date (JST, ISO date) — when this entry shipped, not when the law changes. */
+  releasedAt: string;
+  /** DATA_VERSION this entry was part of (coarse; seq is the precise cursor). */
+  dataVersion: string;
+  /** Areas affected by this change. */
+  areaIds: string[];
+  /** Nature of the change. */
+  type: "added" | "revised" | "corrected";
+  /** If a correction, the seq of the entry it supersedes. */
+  supersedes?: number;
+  /** Human summary in both languages. */
+  summary: { en: string; ja: string };
+  /** When the underlying rule takes effect (ISO date), if applicable. */
+  effectiveFrom: string | null;
+  /** Official source URLs backing the change. */
+  sources: string[];
+}
