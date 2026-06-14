@@ -114,17 +114,31 @@ const totalTax = tax.total * guests;
 >
 > **注意：** 同じ30,000円の部屋でも、1名利用と2名利用では宿泊税が異なります。これは倶知安を除く全自治体共通の課税基準です。
 
-### What to exclude from the rate / 料金から除外すべきもの
+### What the rate includes / excludes — 課税標準（宿泊料金）の範囲
 
-The rate must exclude the following (this is defined by municipal ordinance):
+The tax base is the **per-person lodging charge before consumption tax** (1人1泊・税抜).
+Verified against the Tokyo, Osaka and Kyoto ordinances (June 2026): Tokyo states the
+threshold is "宿泊料金（１人１泊　税抜き）"; Osaka and Kyoto deduct 内税 consumption tax
+from the base.
 
-以下は料金から除外してください（各自治体の条例で定められた課税標準）：
+課税標準は **1人1泊あたりの宿泊料金（消費税を除く）** です。
 
+**Include in the rate / 料金に含めるもの:**
+
+- The room-only (素泊まり) charge — 素泊まり料金
+- Service charges that are part of the lodging charge (サービス料・奉仕料) — these are
+  **included** in the base in Tokyo and Kyoto (e.g. Tokyo: 素泊まり料金＋サービス料)
+
+**Exclude from the rate / 料金から除外するもの:**
+
+- Consumption tax & local consumption tax (消費税・地方消費税) — if the price is quoted
+  tax-inclusive (内税), deduct the tax portion first
 - Meals (食事代)
-- Consumption tax (消費税)
-- Service charges (サービス料)
+- Other taxes (e.g. bathing tax 入湯税) and separately-billed non-lodging services
+  (telephone, meeting rooms, etc.)
 
-This matches the Japanese legal definition: 素泊まり料金 (room charge only, tax-exclusive).
+So 宿泊料金 = 素泊まり料金 ＋ サービス料 − 消費税 − 食事代. A few municipalities word this
+slightly differently — confirm against the area's official source (linked per area).
 
 ## API
 
