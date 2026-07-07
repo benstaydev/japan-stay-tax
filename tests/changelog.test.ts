@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { changelog, getChangelogSince } from "../src/index.js";
+import { changelog, getChangelogSince, DATA_VERSION } from "../src/index.js";
 
 describe("changelog", () => {
   it("has monotonically increasing seq starting at 1", () => {
@@ -26,5 +26,23 @@ describe("changelog", () => {
     expect(tail.length).toBe(1);
     expect(tail[0].seq).toBe(changelog.length);
     expect(getChangelogSince(changelog.length)).toEqual([]);
+  });
+});
+
+describe("seq 2 — tokyo 2027 revision (MIC consent 2026-06-30)", () => {
+  it("records the consented Tokyo revision with its effective date and sources", () => {
+    const e = changelog.find((c) => c.seq === 2);
+    expect(e).toBeTruthy();
+    expect(e!.areaIds).toEqual(["tokyo"]);
+    expect(e!.type).toBe("revised");
+    expect(e!.effectiveFrom).toBe("2027-04-01");
+    expect(e!.sources.length).toBeGreaterThan(0);
+    expect(e!.dataVersion).toBe("2026.07");
+  });
+});
+
+describe("DATA_VERSION", () => {
+  it("is bumped to 2026.07 for the tokyo revision release", () => {
+    expect(DATA_VERSION).toBe("2026.07");
   });
 });

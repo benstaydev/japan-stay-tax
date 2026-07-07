@@ -1,7 +1,7 @@
 import type { TaxArea } from "./types.js";
 
-export const DATA_VERSION = "2026.06";
-export const LAST_UPDATED = "2026-06-13";
+export const DATA_VERSION = "2026.07";
+export const LAST_UPDATED = "2026-07-08";
 
 export const taxAreas: TaxArea[] = [
   // ============================================================
@@ -17,7 +17,7 @@ export const taxAreas: TaxArea[] = [
       {
         authority: { en: "Tokyo Metropolitan Government", ja: "東京都" },
         effectiveFrom: "2002-10-01",
-        effectiveUntil: null,
+        effectiveUntil: "2027-03-31",
         type: "fixed",
         tiers: [
           { min: 0, max: 9999, amount: 0 },
@@ -25,10 +25,19 @@ export const taxAreas: TaxArea[] = [
           { min: 15000, max: null, amount: 200 },
         ],
       },
+      {
+        authority: { en: "Tokyo Metropolitan Government", ja: "東京都" },
+        effectiveFrom: "2027-04-01",
+        effectiveUntil: null,
+        type: "percentage",
+        rate: 0.03,
+        cap: null,
+        threshold: 13000,
+      },
     ],
     exemptions: ["school_trips"],
     notes:
-      "Revision ordinance passed 2026-03-27: switches to 3% rate-based (no cap), raises the exempt threshold to stays under 13,000 yen, and adds hostels/minpaku to the scope. NOT yet in effect — start date pending Minister of Internal Affairs consent, targeted within FY2027.",
+      "Revision consented by the Minister of Internal Affairs 2026-06-30, in effect from 2027-04-01: flat 3% of the nightly charge (no cap), exempt threshold raised to stays under 13,000 yen per person per night, and hostels (kan'i-shukusho) / minpaku added to the scope (their operators register as collection agents from 2026-07-01).",
     source: "https://www.tax.metro.tokyo.lg.jp/kazei/leisure/shuk",
   },
 

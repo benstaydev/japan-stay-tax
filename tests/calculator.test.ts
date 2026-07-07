@@ -615,3 +615,30 @@ describe("taxBase", () => {
     expect(getArea("osaka")!.taxBase).toBe("per_person");
   });
 });
+
+describe("tokyo 2027-04-01 revision (3% rate, ¥13,000 threshold)", () => {
+  it("keeps the 2002 fixed tiers through 2027-03-31", () => {
+    const r = calculateTax({ areaId: "tokyo", ratePerNight: 15000, date: "2027-03-31" });
+    expect(r.total).toBe(200);
+    expect(r.breakdown[0].type).toBe("fixed");
+  });
+
+  it("exempts stays under ¥13,000 from 2027-04-01 (¥10,000–12,999 was ¥100 before)", () => {
+    expect(calculateTax({ areaId: "tokyo", ratePerNight: 12999, date: "2027-04-01" }).total).toBe(0);
+    expect(calculateTax({ areaId: "tokyo", ratePerNight: 10000, date: "2027-04-01" }).total).toBe(0);
+  });
+
+  it("charges 3% of the nightly charge (floored, no cap) at and above the threshold", () => {
+    expect(calculateTax({ areaId: "tokyo", ratePerNight: 13000, date: "2027-04-01" }).total).toBe(390);
+    expect(calculateTax({ areaId: "tokyo", ratePerNight: 13333, date: "2027-04-01" }).total).toBe(399); // floor(399.99)
+    expect(calculateTax({ areaId: "tokyo", ratePerNight: 50000, date: "2027-04-01" }).total).toBe(1500); // no cap
+  });
+
+  it("has exactly one active Tokyo rule on each side of the boundary", () => {
+    expect(calculateTax({ areaId: "tokyo", ratePerNight: 20000, date: "2027-03-31" }).breakdown).toHaveLength(1);
+    const after = calculateTax({ areaId: "tokyo", ratePerNight: 20000, date: "2027-04-01" });
+    expect(after.breakdown).toHaveLength(1);
+    expect(after.breakdown[0].type).toBe("percentage");
+    expect(after.total).toBe(600);
+  });
+});
