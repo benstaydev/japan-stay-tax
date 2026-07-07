@@ -64,27 +64,27 @@ describe("calculateTax", () => {
   // ===========================================
   describe("Tokyo", () => {
     it("exempt under 10,000 yen", () => {
-      const r = calculateTax({ areaId: "tokyo", ratePerNight: 8000 });
+      const r = calculateTax({ areaId: "tokyo", ratePerNight: 8000, date: "2026-01-01" });
       expect(r.total).toBe(0);
     });
 
     it("100 yen for 10,000-14,999 yen", () => {
-      const r = calculateTax({ areaId: "tokyo", ratePerNight: 12000 });
+      const r = calculateTax({ areaId: "tokyo", ratePerNight: 12000, date: "2026-01-01" });
       expect(r.total).toBe(100);
     });
 
     it("200 yen for 15,000+ yen", () => {
-      const r = calculateTax({ areaId: "tokyo", ratePerNight: 25000 });
+      const r = calculateTax({ areaId: "tokyo", ratePerNight: 25000, date: "2026-01-01" });
       expect(r.total).toBe(200);
     });
 
     it("boundary: exactly 10,000 yen", () => {
-      const r = calculateTax({ areaId: "tokyo", ratePerNight: 10000 });
+      const r = calculateTax({ areaId: "tokyo", ratePerNight: 10000, date: "2026-01-01" });
       expect(r.total).toBe(100);
     });
 
     it("boundary: exactly 15,000 yen", () => {
-      const r = calculateTax({ areaId: "tokyo", ratePerNight: 15000 });
+      const r = calculateTax({ areaId: "tokyo", ratePerNight: 15000, date: "2026-01-01" });
       expect(r.total).toBe(200);
     });
   });
