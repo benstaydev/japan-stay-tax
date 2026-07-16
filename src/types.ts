@@ -57,7 +57,7 @@ export interface TaxArea {
    *   multiplies the per-night tax by the number of guests.
    * - "per_unit": tax is levied per room/building regardless of guest count.
    * - "variable": the facility chooses the base — per person, per room, or per
-   *   building — and prices accordingly (currently only Kutchan). The caller passes
+   *   building — and prices accordingly (currently Kutchan and Yamagata City). The caller passes
    *   the applicable taxable charge as `ratePerNight`; a consumer must not assume
    *   per-person and must not auto-multiply by guest count.
    */

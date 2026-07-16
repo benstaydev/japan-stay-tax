@@ -72,7 +72,7 @@ Each area exposes this as a `taxBase` field, so you can branch on it programmati
 
 - `"per_person"` — tax is per guest per night (almost all of Japan); multiply the per-night result by the guest count for a stay total. / 1人1泊あたり（日本のほぼ全域）。1泊分の結果に人数を掛けると宿泊全体の税額になります。
 - `"per_unit"` — tax is per room/building regardless of guests (none currently). / 人数に関係なく1室・1棟あたり（現在該当なし）。
-- `"variable"` — the facility chooses the base (currently only Kutchan); pass the applicable charge and do **not** auto-multiply by guest count. / 施設が課税標準を選択（現在は倶知安のみ）。該当する料金を渡し、人数で自動的に掛けないでください。
+- `"variable"` — the facility chooses the base (currently Kutchan and Yamagata City); pass the applicable charge and do **not** auto-multiply by guest count. / 施設が課税標準を選択（現在は倶知安町と山形市）。該当する料金を渡し、人数で自動的に掛けないでください。
 
 ### Exception: Kutchan (Niseko) / 例外：倶知安町（ニセコ）
 
@@ -110,7 +110,7 @@ const totalTax = tax.total * guests;
 // → ¥400 total for the room
 ```
 
-> **Note:** A ¥30,000 room with 1 guest is taxed differently than the same room with 2 guests — this is how all Japanese municipalities (except Kutchan) define the tax base.
+> **Note:** A ¥30,000 room with 1 guest is taxed differently than the same room with 2 guests — this is how nearly all Japanese municipalities (except the variable-base ones, Kutchan and Yamagata City) define the tax base.
 >
 > **注意：** 同じ30,000円の部屋でも、1名利用と2名利用では宿泊税が異なります。これは倶知安を除く全自治体共通の課税基準です。
 
