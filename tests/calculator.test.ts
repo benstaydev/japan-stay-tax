@@ -642,3 +642,49 @@ describe("tokyo 2027-04-01 revision (3% rate, ¥13,000 threshold)", () => {
     expect(after.total).toBe(600);
   });
 });
+
+describe("2026-06-30 consent batch — six new municipal taxes", () => {
+  it("adds the six areas (55 → 61)", () => {
+    const ids = getAreaIds();
+    expect(ids).toHaveLength(61);
+    for (const id of ["tomakomai", "kitahiroshima", "wakkanai", "yamagata", "fujiyoshida", "fujikawaguchiko"]) {
+      expect(ids).toContain(id);
+    }
+  });
+
+  it("tomakomai: Hokkaido tiers until 2027-03-31, then flat 3% incl. the pref share", () => {
+    const before = calculateTax({ areaId: "tomakomai", ratePerNight: 25000, date: "2027-03-31" });
+    expect(before.total).toBe(200); // 道税 tier only
+    expect(before.breakdown).toHaveLength(1);
+    const after = calculateTax({ areaId: "tomakomai", ratePerNight: 25000, date: "2027-04-01" });
+    expect(after.total).toBe(750); // 3% — single rule, 道税 no longer applies (Niseko model)
+    expect(after.breakdown).toHaveLength(1);
+    expect(after.breakdown[0].type).toBe("percentage");
+  });
+
+  it("kitahiroshima: Hokkaido tiers until 2027-09-30, then flat 3%", () => {
+    expect(calculateTax({ areaId: "kitahiroshima", ratePerNight: 10000, date: "2027-09-30" }).total).toBe(100);
+    expect(calculateTax({ areaId: "kitahiroshima", ratePerNight: 10000, date: "2027-10-01" }).total).toBe(300);
+  });
+
+  it("wakkanai: flat ¥200 city tax STACKS on the prefectural tiers from 2027-03-01", () => {
+    expect(calculateTax({ areaId: "wakkanai", ratePerNight: 10000, date: "2027-02-28" }).total).toBe(100); // 道 only
+    const r = calculateTax({ areaId: "wakkanai", ratePerNight: 10000, date: "2027-03-01" });
+    expect(r.total).toBe(300); // 道 100 + 市 200
+    expect(r.breakdown).toHaveLength(2);
+  });
+
+  it("yamagata: 3% from 2027-04-01 with no threshold, variable tax base", () => {
+    expect(calculateTax({ areaId: "yamagata", ratePerNight: 10000, date: "2027-03-31" }).total).toBe(0);
+    expect(calculateTax({ areaId: "yamagata", ratePerNight: 10000, date: "2027-04-01" }).total).toBe(300);
+    expect(getArea("yamagata")!.taxBase).toBe("variable"); // 1人・1部屋・1棟当たりの宿泊料金
+  });
+
+  it("fuji towns: flat ¥200 per person per night from 2027-04-01, any price", () => {
+    for (const id of ["fujiyoshida", "fujikawaguchiko"]) {
+      expect(calculateTax({ areaId: id, ratePerNight: 3000, date: "2027-04-01" }).total).toBe(200);
+      expect(calculateTax({ areaId: id, ratePerNight: 100000, date: "2027-04-01" }).total).toBe(200);
+      expect(calculateTax({ areaId: id, ratePerNight: 10000, date: "2027-03-31" }).total).toBe(0);
+    }
+  });
+});

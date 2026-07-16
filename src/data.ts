@@ -1,7 +1,7 @@
 import type { TaxArea } from "./types.js";
 
 export const DATA_VERSION = "2026.07";
-export const LAST_UPDATED = "2026-07-08";
+export const LAST_UPDATED = "2026-07-16";
 
 export const taxAreas: TaxArea[] = [
   // ============================================================
@@ -1724,6 +1724,166 @@ export const taxAreas: TaxArea[] = [
   },
 
   // ============================================================
+  // 2026-06-30 MIC CONSENT BATCH (added 2026-07-16)
+  // ============================================================
+  {
+    id: "tomakomai",
+    name: { en: "Tomakomai", ja: "苫小牧市" },
+    prefecture: { en: "Hokkaido", ja: "北海道" },
+    level: "city",
+    taxBase: "per_person",
+    rules: [
+      {
+        authority: { en: "Hokkaido Prefecture", ja: "北海道" },
+        effectiveFrom: "2026-04-01",
+        effectiveUntil: "2027-03-31",
+        type: "fixed",
+        tiers: [
+          { min: 0, max: 19999, amount: 100 },
+          { min: 20000, max: 49999, amount: 200 },
+          { min: 50000, max: null, amount: 500 },
+        ],
+      },
+      {
+        authority: { en: "Tomakomai City", ja: "苫小牧市" },
+        effectiveFrom: "2027-04-01",
+        effectiveUntil: null,
+        type: "percentage",
+        rate: 0.03,
+        cap: null,
+      },
+    ],
+    exemptions: ["school_trips"],
+    notes:
+      "City switches to a flat 3% rate (no exemption threshold, no cap) from 2027-04-01 (MIC consent 2026-06-30). The 3% includes the Hokkaido prefectural share, so the prefectural fixed tiers stop applying — the same model as Niseko's 2026-11 rate switch.",
+    source: "https://www.city.tomakomai.hokkaido.jp/kurashi/zeikin/shiminzei/syukuhakuzei/soumudaijindoui.html",
+  },
+  {
+    id: "kitahiroshima",
+    name: { en: "Kitahiroshima (Hokkaido)", ja: "北広島市" },
+    prefecture: { en: "Hokkaido", ja: "北海道" },
+    level: "city",
+    taxBase: "per_person",
+    rules: [
+      {
+        authority: { en: "Hokkaido Prefecture", ja: "北海道" },
+        effectiveFrom: "2026-04-01",
+        effectiveUntil: "2027-09-30",
+        type: "fixed",
+        tiers: [
+          { min: 0, max: 19999, amount: 100 },
+          { min: 20000, max: 49999, amount: 200 },
+          { min: 50000, max: null, amount: 500 },
+        ],
+      },
+      {
+        authority: { en: "Kitahiroshima City", ja: "北広島市" },
+        effectiveFrom: "2027-10-01",
+        effectiveUntil: null,
+        type: "percentage",
+        rate: 0.03,
+        cap: null,
+      },
+    ],
+    exemptions: [],
+    notes:
+      "City switches to a flat 3% rate from 2027-10-01 (MIC consent 2026-06-30); like Tomakomai, the 3% includes the Hokkaido prefectural share, so the prefectural tiers stop applying. Exemption categories to be confirmed from the ordinance text.",
+    source: "https://www.soumu.go.jp/menu_news/s-news/01zeimu02_02000445.html",
+  },
+  {
+    id: "wakkanai",
+    name: { en: "Wakkanai", ja: "稚内市" },
+    prefecture: { en: "Hokkaido", ja: "北海道" },
+    level: "city",
+    taxBase: "per_person",
+    rules: [
+      {
+        authority: { en: "Hokkaido Prefecture", ja: "北海道" },
+        effectiveFrom: "2026-04-01",
+        effectiveUntil: null,
+        type: "fixed",
+        tiers: [
+          { min: 0, max: 19999, amount: 100 },
+          { min: 20000, max: 49999, amount: 200 },
+          { min: 50000, max: null, amount: 500 },
+        ],
+      },
+      {
+        authority: { en: "Wakkanai City", ja: "稚内市" },
+        effectiveFrom: "2027-03-01",
+        effectiveUntil: null,
+        type: "fixed",
+        tiers: [{ min: 0, max: null, amount: 200 }],
+      },
+    ],
+    exemptions: [],
+    notes:
+      "Flat 200 yen per person per night from 2027-03-01 (ordinance passed 2026-03-16, MIC consent 2026-06-30), levied ON TOP of the Hokkaido prefectural tiers — the stacking model, like Sapporo. Exemption categories to be confirmed from the ordinance text.",
+    source: "https://www.city.wakkanai.hokkaido.jp/kurashi/zeikin/shukuhakuzei/doui.html",
+  },
+  {
+    id: "yamagata",
+    name: { en: "Yamagata City", ja: "山形市" },
+    prefecture: { en: "Yamagata", ja: "山形県" },
+    level: "city",
+    taxBase: "variable",
+    rules: [
+      {
+        authority: { en: "Yamagata City", ja: "山形市" },
+        effectiveFrom: "2027-04-01",
+        effectiveUntil: null,
+        type: "percentage",
+        rate: 0.03,
+        cap: null,
+      },
+    ],
+    exemptions: ["school_trips"],
+    notes:
+      "Yamagata Prefecture's first accommodation tax (MIC consent 2026-06-30): 3% of the charge with no exemption threshold, from 2027-04-01. The tax base is per person, per room, or per building depending on how the facility prices (1人・1部屋・1棟当たりの宿泊料金) — callers declare the basis, as in Kutchan.",
+    source: "https://www.city.yamagata-yamagata.lg.jp/kurashi/zeikin/1018323/1018324.html",
+  },
+  {
+    id: "fujiyoshida",
+    name: { en: "Fujiyoshida", ja: "富士吉田市" },
+    prefecture: { en: "Yamanashi", ja: "山梨県" },
+    level: "city",
+    taxBase: "per_person",
+    rules: [
+      {
+        authority: { en: "Fujiyoshida City", ja: "富士吉田市" },
+        effectiveFrom: "2027-04-01",
+        effectiveUntil: null,
+        type: "fixed",
+        tiers: [{ min: 0, max: null, amount: 200 }],
+      },
+    ],
+    exemptions: [],
+    notes:
+      "Yamanashi's first accommodation taxes (with Fujikawaguchiko): flat 200 yen per person per night from 2027-04-01 (MIC consent 2026-06-30). Exemption categories to be confirmed from the ordinance text; an operator briefing is planned for Aug–Sep 2026.",
+    source: "https://www.city.fujiyoshida.yamanashi.jp/site/zeinavi/14675.html",
+  },
+  {
+    id: "fujikawaguchiko",
+    name: { en: "Fujikawaguchiko", ja: "富士河口湖町" },
+    prefecture: { en: "Yamanashi", ja: "山梨県" },
+    level: "town",
+    taxBase: "per_person",
+    rules: [
+      {
+        authority: { en: "Fujikawaguchiko Town", ja: "富士河口湖町" },
+        effectiveFrom: "2027-04-01",
+        effectiveUntil: null,
+        type: "fixed",
+        tiers: [{ min: 0, max: null, amount: 200 }],
+      },
+    ],
+    exemptions: [],
+    notes:
+      "Yamanashi's first accommodation taxes (with Fujiyoshida): flat 200 yen per person per night from 2027-04-01 (MIC consent 2026-06-30). Exemption categories to be confirmed from the ordinance text.",
+    source: "https://www.soumu.go.jp/menu_news/s-news/01zeimu02_02000445.html",
+  },
+
+  // ============================================================
   // OKINAWA PREFECTURE (other areas, from February 2027)
   // ============================================================
   {
@@ -1748,7 +1908,7 @@ export const taxAreas: TaxArea[] = [
     ],
     exemptions: ["school_trips", "student_competitions"],
     notes:
-      "Japan's first prefecture-level percentage tax: 2% of the per-person room-only rate, capped at 2,000 yen. The tax base is rounded down to the nearest 1,000 yen (1,000円未満切捨, e.g. an 8,500 yen stay is taxed as 8,000 → 160 yen) and capped at 100,000 yen — the 2,000 yen tax cap encodes the base cap. In Miyakojima, Ishigaki, Onna, Motobu and Chatan the prefectural rate is 0.8% plus a municipal 1.2% — use their dedicated entries.",
+      "Japan's first prefecture-level percentage tax: 2% of the per-person room-only rate, capped at 2,000 yen. The tax base is rounded down to the nearest 1,000 yen (1,000円未満切捨, e.g. an 8,500 yen stay is taxed as 8,000 → 160 yen) and capped at 100,000 yen — the 2,000 yen tax cap encodes the base cap. In Miyakojima, Ishigaki, Onna, Motobu and Chatan the prefectural rate is 0.8% plus a municipal 1.2% — use their dedicated entries. Nago City got MIC consent 2026-06-30 for its own additional 1.2% (cap 1,200 yen; formal 施行 2027-02-01 in the consent documents, but the city communicates a levy start around 2027-05) — it will become a dedicated entry once the levy start date is confirmed.",
     source:
       "https://www.pref.okinawa.jp/kurashikankyo/zeikin/1003660/1036559/1036550.html",
   },

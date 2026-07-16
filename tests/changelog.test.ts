@@ -46,3 +46,15 @@ describe("DATA_VERSION", () => {
     expect(DATA_VERSION).toBe("2026.07");
   });
 });
+
+describe("seq 3 — six municipal taxes from the 2026-06-30 consent batch", () => {
+  it("records all six areas with the MIC source", () => {
+    const e = changelog.find((c) => c.seq === 3);
+    expect(e).toBeTruthy();
+    expect(e!.type).toBe("added");
+    expect([...e!.areaIds].sort()).toEqual(
+      ["fujikawaguchiko", "fujiyoshida", "kitahiroshima", "tomakomai", "wakkanai", "yamagata"],
+    );
+    expect(e!.sources.length).toBeGreaterThan(0);
+  });
+});

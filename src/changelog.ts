@@ -39,6 +39,19 @@ export const changelog: ChangelogEntry[] = [
       "https://www.tax.metro.tokyo.lg.jp/kazei/leisure/shuk/shuk_minaoshi",
     ],
   },
+  {
+    seq: 3,
+    releasedAt: "2026-07-16",
+    dataVersion: "2026.07",
+    areaIds: ["tomakomai", "kitahiroshima", "wakkanai", "yamagata", "fujiyoshida", "fujikawaguchiko"],
+    type: "added",
+    summary: {
+      en: "Six new municipal taxes (MIC consent 2026-06-30): Tomakomai 3% from 2027-04-01 and Kitahiroshima 3% from 2027-10-01 (each replacing the Hokkaido prefectural tiers there), Wakkanai flat ¥200 stacking on the prefectural tax from 2027-03-01, Yamagata City 3% from 2027-04-01 (prefecture's first), and Fujiyoshida + Fujikawaguchiko flat ¥200 from 2027-04-01 (Yamanashi's first).",
+      ja: "2026年6月30日総務大臣同意の新税6件を追加：苫小牧市3％（2027年4月1日〜、道税は適用終了）・北広島市3％（2027年10月1日〜、同）・稚内市定額200円（2027年3月1日〜、道税と併課）・山形市3％（2027年4月1日〜、山形県初）・富士吉田市／富士河口湖町定額200円（2027年4月1日〜、山梨県初）。",
+    },
+    effectiveFrom: null,
+    sources: ["https://www.soumu.go.jp/menu_news/s-news/01zeimu02_02000445.html"],
+  },
 ];
 
 /** Return entries with seq strictly greater than `sinceSeq`, ascending. */
