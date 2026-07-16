@@ -1785,9 +1785,9 @@ export const taxAreas: TaxArea[] = [
         cap: null,
       },
     ],
-    exemptions: [],
+    exemptions: ["school_trips"],
     notes:
-      "City switches to a flat 3% rate from 2027-10-01 (MIC consent 2026-06-30); like Tomakomai, the 3% includes the Hokkaido prefectural share, so the prefectural tiers stop applying. Exemption categories to be confirmed from the ordinance text.",
+      "City switches to a flat 3% rate from 2027-10-01 (MIC consent 2026-06-30); like Tomakomai, the 3% includes the Hokkaido prefectural share, so the prefectural tiers stop applying. The school-trip exemption is the prefectural rule's; the city's own exemption categories are to be confirmed from the ordinance text.",
     source: "https://www.soumu.go.jp/menu_news/s-news/01zeimu02_02000445.html",
   },
   {
@@ -1816,9 +1816,9 @@ export const taxAreas: TaxArea[] = [
         tiers: [{ min: 0, max: null, amount: 200 }],
       },
     ],
-    exemptions: [],
+    exemptions: ["school_trips"],
     notes:
-      "Flat 200 yen per person per night from 2027-03-01 (ordinance passed 2026-03-16, MIC consent 2026-06-30), levied ON TOP of the Hokkaido prefectural tiers — the stacking model, like Sapporo. Exemption categories to be confirmed from the ordinance text.",
+      "Flat 200 yen per person per night from 2027-03-01 (ordinance passed 2026-03-16, MIC consent 2026-06-30), levied ON TOP of the Hokkaido prefectural tiers — the stacking model, like Sapporo. The school-trip exemption is the prefectural rule's; the city's own exemption categories are to be confirmed from the ordinance text.",
     source: "https://www.city.wakkanai.hokkaido.jp/kurashi/zeikin/shukuhakuzei/doui.html",
   },
   {
