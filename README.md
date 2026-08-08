@@ -14,6 +14,10 @@ Built for PMS developers, channel managers, booking engines, and accommodation o
 
 日本の宿泊税は自治体ごとに税率・段階・ルールが異なります。東京、大阪、京都をはじめ50以上の自治体に対応。PMS開発者、チャネルマネージャー、予約エンジン、宿泊事業者向けに、正確な宿泊税データを一元的に提供します。
 
+> ⚠️ **Not tax or legal advice.** This library is a computational aid. Rates change and the data may contain errors — always verify against the relevant municipality's official source before you rely on a figure to collect, remit, or report tax. See the [Disclaimer](#disclaimer--免責事項) below.
+>
+> ⚠️ **税務・法務上の助言ではありません。** 本ライブラリは計算補助ツールです。税率は改定され、データに誤りが含まれる可能性があります。税の徴収・納付・申告に用いる前に、必ず各自治体の公式情報でご確認ください。詳細は下記の[免責事項](#disclaimer--免責事項)をご覧ください。
+
 ## Install / インストール
 
 ```bash
@@ -304,6 +308,22 @@ Found an outdated rate or a missing municipality? PRs welcome!
 - **Booking engines** — show tax breakdown during reservation / 予約時の税額内訳表示
 - **Accounting software** — validate collected accommodation tax / 徴収済み宿泊税の検証
 - **Travel apps** — display estimated tax for trip planning / 旅行計画時の税額目安表示
+
+## Disclaimer / 免責事項
+
+This library is provided as a **computational aid and data reference — not tax or legal advice.**
+
+- **Verify before you rely on it.** Accommodation-tax rules change frequently, and the data may contain errors, omissions, or out-of-date figures. Always confirm the result against the relevant municipality's official source (linked per area in each `TaxArea`'s `source` field) before using it to collect, remit, or report tax.
+- **No warranty.** As stated in the [MIT License](./LICENSE), the software is provided "AS IS", without warranty of any kind, and the authors and copyright holders accept no liability for any claim, damages, or discrepancy arising from its use.
+- **Compliance is your responsibility.** Determining and meeting your accommodation-tax obligations under applicable law is your responsibility. When in doubt, consult the municipality or a qualified tax professional.
+
+---
+
+本ライブラリは、**計算補助ツールおよびデータの参考情報**として提供されるものであり、**税務・法務上の助言ではありません。**
+
+- **利用前に必ずご確認ください。** 宿泊税の制度は頻繁に改定され、データには誤り・欠落・古い情報が含まれる可能性があります。税の徴収・納付・申告に用いる前に、各自治体の公式情報（各 `TaxArea` の `source` フィールドにリンク）で必ずご確認ください。
+- **無保証。** [MITライセンス](./LICENSE)に記載のとおり、本ソフトウェアは「現状有姿（AS IS）」で提供され、いかなる保証もありません。作成者および著作権者は、その利用に起因するいかなる請求・損害・差異についても責任を負いません。
+- **コンプライアンスは利用者の責任です。** 適用法令に基づく宿泊税の義務の判断および履行は、利用者の責任で行ってください。ご不明な場合は、各自治体または税務の専門家にご相談ください。
 
 ## License / ライセンス
 
