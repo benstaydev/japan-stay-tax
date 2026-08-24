@@ -20,14 +20,15 @@ Built for PMS developers, channel managers, booking engines, and accommodation o
 
 ## Install / インストール
 
-> ⚠️ **このパッケージは npm に未公開です（2026-08-24 時点で `japan-stay-tax` の名前は未取得）。**
-> 公開までは、この**正規リポジトリ**から直接インストールしてください。
-> **Not yet published to npm** — the name `japan-stay-tax` is unclaimed as of 2026-08-24.
-> Until it is published, install from this repository, which is the canonical source.
-
 ```bash
-npm install github:benstaydev/japan-stay-tax
+npm install japan-stay-tax
 ```
+
+正規の配布元は npm の [`japan-stay-tax`](https://www.npmjs.com/package/japan-stay-tax)
+（発行者: benstaydev）と、下記の正規リポジトリのみです。
+The only official distribution channels are the npm package
+[`japan-stay-tax`](https://www.npmjs.com/package/japan-stay-tax) (published by benstaydev)
+and the canonical repository below.
 
 ## ⚠️ 偽リポジトリにご注意ください / Beware of impersonating repositories
 
