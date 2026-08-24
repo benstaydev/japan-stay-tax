@@ -1,0 +1,53 @@
+name: Publish to npm
+
+# Trusted publishing (OIDC): no long-lived npm token lives in this repo.
+# npm mints a short-lived credential from the OIDC token GitHub issues to this
+# exact workflow, and attaches a provenance attestation — so npmjs.com shows
+# "built from benstaydev/japan-stay-tax at <commit>". That verified link is the
+# thing a cloned repo cannot forge, which matters here: a copy of this project
+# was found distributing a Windows executable under the same name.
+#
+# Prerequisite: the package must already exist on npm and have this repository
+# + workflow registered under Settings → Trusted Publisher. Trusted publishing
+# cannot create an unscoped package that has never been published.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write   # required — this is what lets npm verify the publisher
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      # npm >= 11.5.1 is required for trusted publishing; ubuntu-latest still
+      # ships npm 10.x with Node 20, which fails with a misleading ENEEDAUTH.
+      - run: npm install -g npm@latest
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm test
+      - run: npm run build
+
+      # Refuse to publish a version that is already on the registry, rather
+      # than failing halfway through.
+      - name: Guard against republishing an existing version
+        run: |
+          V=$(node -p "require('./package.json').version")
+          if npm view "japan-stay-tax@$V" version >/dev/null 2>&1; then
+            echo "japan-stay-tax@$V is already published"; exit 1
+          fi
+          echo "publishing japan-stay-tax@$V"
+
+      - run: npm publish --access public
