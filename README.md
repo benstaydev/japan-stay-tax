@@ -20,9 +20,32 @@ Built for PMS developers, channel managers, booking engines, and accommodation o
 
 ## Install / インストール
 
+> ⚠️ **このパッケージは npm に未公開です（2026-08-24 時点で `japan-stay-tax` の名前は未取得）。**
+> 公開までは、この**正規リポジトリ**から直接インストールしてください。
+> **Not yet published to npm** — the name `japan-stay-tax` is unclaimed as of 2026-08-24.
+> Until it is published, install from this repository, which is the canonical source.
+
 ```bash
-npm install japan-stay-tax
+npm install github:benstaydev/japan-stay-tax
 ```
+
+## ⚠️ 偽リポジトリにご注意ください / Beware of impersonating repositories
+
+**正規のリポジトリは https://github.com/benstaydev/japan-stay-tax だけです。**
+
+本ライブラリは **TypeScript / JavaScript のライブラリ**です。したがって:
+
+- **インストーラも Windows 実行ファイル (.exe) も配布していません**
+- **リリース zip も配布していません**
+- 「Download for Windows」「.exe をダブルクリック」などと書かれた複製は**当プロジェクトのものではありません**
+
+同名のリポジトリが検索上位に出ることがありますが、実行ファイルのダウンロードを促すものは
+**マルウェアの疑いがあります。ダウンロード・実行しないでください。**
+
+**The only canonical repository is https://github.com/benstaydev/japan-stay-tax.**
+This is a TypeScript/JavaScript library: it ships **no installer, no Windows executable,
+and no release zip**. A copy telling you to download and run an `.exe` is **not ours** —
+do not download or run it.
 
 ## Quick Start / クイックスタート
 
