@@ -26,10 +26,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # NOTE: deliberately no `registry-url`. With it, setup-node writes an
+      # .npmrc containing `_authToken=${NODE_AUTH_TOKEN}`; with no token set
+      # that is an EMPTY credential, and npm then uses it instead of falling
+      # back to OIDC — which surfaces as `E404 PUT .../japan-stay-tax` even
+      # though the package plainly exists. Trusted publishing needs no .npmrc.
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          registry-url: https://registry.npmjs.org
 
       # npm >= 11.5.1 is required for trusted publishing, and ubuntu-latest
       # still ships npm 10.x with Node 20 (which fails as a misleading
