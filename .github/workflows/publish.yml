@@ -31,9 +31,11 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org
 
-      # npm >= 11.5.1 is required for trusted publishing; ubuntu-latest still
-      # ships npm 10.x with Node 20, which fails with a misleading ENEEDAUTH.
-      - run: npm install -g npm@latest
+      # npm >= 11.5.1 is required for trusted publishing, and ubuntu-latest
+      # still ships npm 10.x with Node 20 (which fails as a misleading
+      # ENEEDAUTH). Pin the 11 line rather than @latest: npm 12 requires
+      # Node >= 22 and refuses to install here with EBADENGINE.
+      - run: npm install -g npm@^11.5.1
 
       - run: npm ci
       - run: npm run lint
