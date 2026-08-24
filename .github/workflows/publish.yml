@@ -41,6 +41,19 @@ jobs:
       # Node >= 22 and refuses to install here with EBADENGINE.
       - run: npm install -g npm@^11.5.1
 
+      # Diagnostic: proves the job really has an OIDC token available and a
+      # new enough npm. If both are true and publishing still fails with
+      # ENEEDAUTH, the mismatch is in the npm-side Trusted Publisher config.
+      - name: Check OIDC prerequisites
+        run: |
+          echo "npm: $(npm -v)  node: $(node -v)"
+          if [ -n "$ACTIONS_ID_TOKEN_REQUEST_URL" ]; then
+            echo "OIDC: id-token available to this job ✓"
+          else
+            echo "OIDC: NO id-token — permissions.id-token: write is missing"; exit 1
+          fi
+          echo "repo=$GITHUB_REPOSITORY workflow_ref=$GITHUB_WORKFLOW_REF"
+
       - run: npm ci
       - run: npm run lint
       - run: npm test
