@@ -1,6 +1,14 @@
-name: Publish to npm
+name: Stage a release to npm
 
-# Trusted publishing (OIDC): no long-lived npm token lives in this repo.
+# Trusted publishing (OIDC) + STAGED publishing: no long-lived npm token lives
+# in this repo, and this workflow cannot publish to the registry at all — it can
+# only submit a release to the staging queue. A human then approves it with 2FA
+# (`npm stage approve <id>`, or the Staged Packages tab on npmjs.com).
+#
+# That is deliberate: if this workflow is ever compromised, the attacker can
+# queue something for review but cannot ship it. The npm-side trusted publisher
+# must therefore allow `npm stage publish` ONLY — ticking `npm publish` as well
+# would hand that bypass straight back.
 # npm mints a short-lived credential from the OIDC token GitHub issues to this
 # exact workflow, and attaches a provenance attestation — so npmjs.com shows
 # "built from benstaydev/japan-stay-tax at <commit>". That verified link is the
@@ -33,13 +41,12 @@ jobs:
       # though the package plainly exists. Trusted publishing needs no .npmrc.
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22   # staged publishing requires Node >= 22.14.0
 
-      # npm >= 11.5.1 is required for trusted publishing, and ubuntu-latest
-      # still ships npm 10.x with Node 20 (which fails as a misleading
-      # ENEEDAUTH). Pin the 11 line rather than @latest: npm 12 requires
-      # Node >= 22 and refuses to install here with EBADENGINE.
-      - run: npm install -g npm@^11.5.1
+      # Trusted publishing needs npm >= 11.5.1; staged publishing needs >= 11.15.0.
+      # Pin the 11 line rather than @latest — npm 12 changes the supported Node
+      # range and has broken this job once already (EBADENGINE).
+      - run: npm install -g npm@^11.15.0
 
       # Diagnostic: proves the job really has an OIDC token available and a
       # new enough npm. If both are true and publishing still fails with
@@ -61,7 +68,7 @@ jobs:
 
       # Refuse to publish a version that is already on the registry, rather
       # than failing halfway through.
-      - name: Guard against republishing an existing version
+      - name: Guard against staging a version that is already published
         run: |
           V=$(node -p "require('./package.json').version")
           if npm view "japan-stay-tax@$V" version >/dev/null 2>&1; then
@@ -69,4 +76,7 @@ jobs:
           fi
           echo "publishing japan-stay-tax@$V"
 
-      - run: npm publish --access public
+      # Submits to the staging queue. Nothing is live until a maintainer approves
+      # it with 2FA. Inspect first with `npm stage list japan-stay-tax`,
+      # `npm stage view <id>`, `npm stage download <id>`.
+      - run: npm stage publish --access public
