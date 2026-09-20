@@ -644,9 +644,9 @@ describe("tokyo 2027-04-01 revision (3% rate, ¥13,000 threshold)", () => {
 });
 
 describe("2026-06-30 consent batch — six new municipal taxes", () => {
-  it("adds the six areas (55 → 61)", () => {
+  it("adds the six areas (55 → 61; 63 after the 2026-09 update)", () => {
     const ids = getAreaIds();
-    expect(ids).toHaveLength(61);
+    expect(ids).toHaveLength(63);
     for (const id of ["tomakomai", "kitahiroshima", "wakkanai", "yamagata", "fujiyoshida", "fujikawaguchiko"]) {
       expect(ids).toContain(id);
     }
@@ -657,7 +657,7 @@ describe("2026-06-30 consent batch — six new municipal taxes", () => {
     expect(before.total).toBe(200); // 道税 tier only
     expect(before.breakdown).toHaveLength(1);
     const after = calculateTax({ areaId: "tomakomai", ratePerNight: 25000, date: "2027-04-01" });
-    expect(after.total).toBe(750); // 3% — single rule, 道税 no longer applies (Niseko model)
+    expect(after.total).toBe(750); // 3% — single rule; the 道税 tier is embedded in it (道税控除方式)
     expect(after.breakdown).toHaveLength(1);
     expect(after.breakdown[0].type).toBe("percentage");
   });
@@ -686,5 +686,48 @@ describe("2026-06-30 consent batch — six new municipal taxes", () => {
       expect(calculateTax({ areaId: id, ratePerNight: 100000, date: "2027-04-01" }).total).toBe(200);
       expect(calculateTax({ areaId: id, ratePerNight: 10000, date: "2027-03-31" }).total).toBe(0);
     }
+  });
+});
+
+describe("2026-09 update — Nago (Okinawa) and Unzen (Nagasaki)", () => {
+  it("adds nago and unzen (61 → 63)", () => {
+    const ids = getAreaIds();
+    expect(ids).toHaveLength(63);
+    expect(ids).toContain("nago");
+    expect(ids).toContain("unzen");
+  });
+
+  it("nago: nothing before 2027-02-01, then pref 0.8% + city 1.2% on a base rounded down to ¥1,000", () => {
+    expect(calculateTax({ areaId: "nago", ratePerNight: 10000, date: "2027-01-31" }).total).toBe(0);
+    const r = calculateTax({ areaId: "nago", ratePerNight: 10000, date: "2027-02-01" });
+    expect(r.total).toBe(200); // 80 + 120
+    expect(r.breakdown).toHaveLength(2);
+    expect(r.breakdown.map((b) => b.amount)).toEqual([80, 120]);
+    expect(calculateTax({ areaId: "nago", ratePerNight: 8500, date: "2027-02-01" }).total).toBe(160); // base 8,000
+    expect(calculateTax({ areaId: "nago", ratePerNight: 999, date: "2027-02-01" }).total).toBe(0); // base 0
+  });
+
+  it("nago: caps at ¥800 + ¥1,200 = ¥2,000, matching the other five Okinawa municipalities", () => {
+    const nago = calculateTax({ areaId: "nago", ratePerNight: 150000, date: "2027-02-01" });
+    expect(nago.total).toBe(2000);
+    expect(nago.breakdown.map((b) => b.amount)).toEqual([800, 1200]);
+    const miyako = calculateTax({ areaId: "miyakojima", ratePerNight: 150000, date: "2027-02-01" });
+    expect(nago.total).toBe(miyako.total);
+  });
+
+  it("unzen: ¥100 under ¥5,000 and ¥350 from ¥5,000 per person per night, from 2027-04-01", () => {
+    expect(calculateTax({ areaId: "unzen", ratePerNight: 4999, date: "2027-03-31" }).total).toBe(0);
+    expect(calculateTax({ areaId: "unzen", ratePerNight: 0, date: "2027-04-01" }).total).toBe(100); // no exempt band
+    expect(calculateTax({ areaId: "unzen", ratePerNight: 4999, date: "2027-04-01" }).total).toBe(100);
+    expect(calculateTax({ areaId: "unzen", ratePerNight: 5000, date: "2027-04-01" }).total).toBe(350);
+    const r = calculateTax({ areaId: "unzen", ratePerNight: 100000, date: "2027-04-01" });
+    expect(r.total).toBe(350);
+    expect(r.breakdown).toHaveLength(1);
+    expect(r.breakdown[0].type).toBe("fixed");
+  });
+
+  it("nagasaki keeps its 2023 tiers (revision still awaiting MIC consent)", () => {
+    expect(calculateTax({ areaId: "nagasaki", ratePerNight: 8000, date: "2027-04-01" }).total).toBe(100);
+    expect(calculateTax({ areaId: "nagasaki", ratePerNight: 15000, date: "2027-04-01" }).total).toBe(200);
   });
 });

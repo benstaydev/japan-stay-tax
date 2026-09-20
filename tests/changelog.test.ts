@@ -42,8 +42,8 @@ describe("seq 2 — tokyo 2027 revision (MIC consent 2026-06-30)", () => {
 });
 
 describe("DATA_VERSION", () => {
-  it("is bumped to 2026.07 for the tokyo revision release", () => {
-    expect(DATA_VERSION).toBe("2026.07");
+  it("is bumped to 2026.09 for the Nago/Unzen release", () => {
+    expect(DATA_VERSION).toBe("2026.09");
   });
 });
 
@@ -56,5 +56,31 @@ describe("seq 3 — six municipal taxes from the 2026-06-30 consent batch", () =
       ["fujikawaguchiko", "fujiyoshida", "kitahiroshima", "tomakomai", "wakkanai", "yamagata"],
     );
     expect(e!.sources.length).toBeGreaterThan(0);
+  });
+});
+
+describe("seq 4–6 — 2026-09-20 release", () => {
+  it("seq 4 adds nago and unzen with MIC consent sources", () => {
+    const e = changelog.find((c) => c.seq === 4);
+    expect(e).toBeTruthy();
+    expect(e!.type).toBe("added");
+    expect([...e!.areaIds].sort()).toEqual(["nago", "unzen"]);
+    expect(e!.dataVersion).toBe("2026.09");
+    expect(e!.sources.some((s) => s.includes("soumu.go.jp"))).toBe(true);
+  });
+
+  it("seq 5 is a correction that supersedes seq 3 and covers the same six areas", () => {
+    const e = changelog.find((c) => c.seq === 5);
+    expect(e!.type).toBe("corrected");
+    expect(e!.supersedes).toBe(3);
+    const six = changelog.find((c) => c.seq === 3)!.areaIds;
+    expect([...e!.areaIds].sort()).toEqual([...six].sort());
+  });
+
+  it("seq 6 is a notes-only correction for kutchan and niseko", () => {
+    const e = changelog.find((c) => c.seq === 6);
+    expect(e!.type).toBe("corrected");
+    expect(e!.supersedes).toBeUndefined();
+    expect([...e!.areaIds].sort()).toEqual(["kutchan", "niseko"]);
   });
 });
