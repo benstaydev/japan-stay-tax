@@ -48,6 +48,24 @@ This is a TypeScript/JavaScript library: it ships **no installer, no Windows exe
 and no release zip**. A copy telling you to download and run an `.exe` is **not ours** —
 do not download or run it.
 
+### 確認済みの偽リポジトリ / Known impersonating repositories
+
+- `github.com/Capricious-storage478/japan-stay-tax` — **偽物です。利用しないでください。**
+  本リポジトリのソースをそのままコピーし、README を書き換えて Windows ユーザーに
+  `japan-stay-tax-win.exe` / `japan-stay-tax-setup.exe` のダウンロードと実行を促しています。
+  当プロジェクトとは一切関係がなく、マルウェアの疑いがあります（2026年9月20日確認）。
+  ダウンロード・実行せず、GitHub の不正利用報告フォームから通報してください。
+
+- `github.com/Capricious-storage478/japan-stay-tax` — **FRAUDULENT. Do not use it.**
+  It is a verbatim copy of this repository's source with a rewritten README that tells
+  Windows users to download and run `japan-stay-tax-win.exe` / `japan-stay-tax-setup.exe`
+  from its releases page. It is not affiliated with this project and should be treated as
+  malware (confirmed 2026-09-20). Do not download or run anything from it; please report it
+  through GitHub's abuse form.
+
+Found another copy? Open an issue on the canonical repository. /
+他にも複製を見つけた場合は、正規リポジトリの Issue でお知らせください。
+
 ## Quick Start / クイックスタート
 
 ```typescript
