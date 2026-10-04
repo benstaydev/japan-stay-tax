@@ -1,7 +1,7 @@
 import type { TaxArea } from "./types.js";
 
-export const DATA_VERSION = "2026.09";
-export const LAST_UPDATED = "2026-09-20";
+export const DATA_VERSION = "2026.10";
+export const LAST_UPDATED = "2026-10-04";
 
 export const taxAreas: TaxArea[] = [
   // ============================================================
@@ -275,7 +275,7 @@ export const taxAreas: TaxArea[] = [
       {
         authority: { en: "Nagasaki City", ja: "長崎市" },
         effectiveFrom: "2023-04-01",
-        effectiveUntil: null,
+        effectiveUntil: "2027-03-31",
         type: "fixed",
         tiers: [
           { min: 0, max: 9999, amount: 100 },
@@ -283,11 +283,22 @@ export const taxAreas: TaxArea[] = [
           { min: 20000, max: null, amount: 500 },
         ],
       },
+      {
+        authority: { en: "Nagasaki City", ja: "長崎市" },
+        effectiveFrom: "2027-04-01",
+        effectiveUntil: null,
+        type: "fixed",
+        tiers: [
+          { min: 0, max: 5999, amount: 100 },
+          { min: 6000, max: 19999, amount: 300 },
+          { min: 20000, max: null, amount: 500 },
+        ],
+      },
     ],
     exemptions: ["school_trips", "student_competitions"],
     notes:
-      "A revision passed the city council 2026-03-12 (under ¥6,000 = 100 yen / ¥6,000-19,999 = 300 yen / ¥20,000+ = 500 yen) targeting 2027-04-01, but as of 2026-09-20 the Minister of Internal Affairs' consent has not been announced, so the start date is not yet fixed. Current rates remain in effect.",
-    source: "https://www.city.nagasaki.lg.jp/page/5301.html",
+      "Revised from 2027-04-01 (city council 2026-03-12, Minister of Internal Affairs consent 2026-09-30; start date as scheduled in the consent documents): under ¥6,000 = 100 yen, ¥6,000-19,999 = 300 yen, ¥20,000+ = 500 yen per person per night. The 2023 tiers (under ¥10,000 = 100 / ¥10,000-19,999 = 200 / ¥20,000+ = 500) apply through 2027-03-31. Exempt: school-trip participants, and students at sports or cultural competitions as part of club activities or local teams, with their supervisors.",
+    source: "https://www.soumu.go.jp/main_content/001093328.pdf",
   },
 
   // ============================================================
@@ -2150,5 +2161,74 @@ export const taxAreas: TaxArea[] = [
     notes:
       "Sixth Okinawa municipality with its own tax (ordinance passed 2026-03-26, Minister of Internal Affairs consent 2026-06-30). Combined 2% capped at 2,000 yen (prefecture 0.8%/800 + city 1.2%/1,200), the same structure as Miyakojima, Ishigaki, Onna, Motobu and Chatan; the 1,000-yen base round-down is the prefectural rule applied to both shares. The consent documents and the prefecture's list of concurrent municipalities give 2027-02-01 as the start; the city's December 2025 draft schedule had mentioned collection from May 2027, so confirm with the city before relying on the first months. Exemptions also cover school club activities and sanctioned student competitions with their supervisors.",
     source: "https://www.soumu.go.jp/main_content/001080177.pdf",
+  },
+
+  // ============================================================
+  // 2026-09-30 MIC CONSENT (added 2026-10-04)
+  // ============================================================
+  {
+    id: "kagoshima",
+    name: { en: "Kagoshima", ja: "鹿児島市" },
+    prefecture: { en: "Kagoshima", ja: "鹿児島県" },
+    level: "city",
+    taxBase: "per_person",
+    rules: [
+      {
+        authority: { en: "Kagoshima City", ja: "鹿児島市" },
+        effectiveFrom: "2027-04-01",
+        effectiveUntil: null,
+        type: "fixed",
+        tiers: [{ min: 0, max: null, amount: 200 }],
+      },
+    ],
+    exemptions: ["school_trips"],
+    notes:
+      "Kagoshima Prefecture's first accommodation taxes (with Ibusuki); there is no prefecture-wide tax. Flat 200 yen per person per night with no exempt threshold. Ordinance passed 2026-06-29, Minister of Internal Affairs consent 2026-09-30; the ordinance leaves the start to a city rule (規則で定める日) and the consent documents schedule it for 2027-04-01. School-trip participants and their supervisors are exempt.",
+    source: "https://www.soumu.go.jp/main_content/001093326.pdf",
+  },
+  {
+    id: "ibusuki",
+    name: { en: "Ibusuki", ja: "指宿市" },
+    prefecture: { en: "Kagoshima", ja: "鹿児島県" },
+    level: "city",
+    taxBase: "per_person",
+    rules: [
+      {
+        authority: { en: "Ibusuki City", ja: "指宿市" },
+        effectiveFrom: "2027-04-01",
+        effectiveUntil: null,
+        type: "fixed",
+        tiers: [{ min: 0, max: null, amount: 200 }],
+      },
+    ],
+    exemptions: ["school_trips", "children_under_12"],
+    notes:
+      "Flat 200 yen per person per night with no exempt threshold, from 2027-04-01 as scheduled in the consent documents (ordinance passed 2026-06-30, Minister of Internal Affairs consent 2026-09-30). Exempt: children up to the first March 31 after their 12th birthday (in practice, through elementary school), and school-trip participants with their supervisors.",
+    source: "https://www.soumu.go.jp/main_content/001093327.pdf",
+  },
+  {
+    id: "shirahama",
+    name: { en: "Shirahama", ja: "白浜町" },
+    prefecture: { en: "Wakayama", ja: "和歌山県" },
+    level: "town",
+    taxBase: "per_person",
+    rules: [
+      {
+        authority: { en: "Shirahama Town", ja: "白浜町" },
+        effectiveFrom: "2027-03-01",
+        effectiveUntil: null,
+        type: "fixed",
+        tiers: [
+          { min: 0, max: 9999, amount: 200 },
+          { min: 10000, max: 19999, amount: 300 },
+          { min: 20000, max: 49999, amount: 500 },
+          { min: 50000, max: null, amount: 1000 },
+        ],
+      },
+    ],
+    exemptions: ["school_trips", "children_under_12", "disaster_evacuees"],
+    notes:
+      "Wakayama Prefecture's first accommodation tax; there is no prefecture-wide tax. Four tiers per person per night with no exempt band: under ¥10,000 = 200 yen, ¥10,000-19,999 = 300 yen, ¥20,000-49,999 = 500 yen, ¥50,000+ = 1,000 yen. Ordinance passed 2026-06-16, Minister of Internal Affairs consent 2026-09-30; the town announces the start as 2027-03-01. Exempt: school-trip participants with their supervisors, children under 12, and people affected by an earthquake or other disaster.",
+    source: "https://www.town.shirahama.wakayama.jp/soshiki/zeimu/kazei/gyomu/syukuhakuzei/4086.html",
   },
 ];

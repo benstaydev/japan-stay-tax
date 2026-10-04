@@ -258,7 +258,7 @@ The `changelog` array is also exported directly for the full, ordered history. /
 
 ## Covered Municipalities / 対応自治体一覧
 
-Currently covers **50+ municipalities (63 areas)** across Japan:
+Currently covers **50+ municipalities (66 areas)** across Japan:
 
 | Area ID | Name / 名称 | Tax Type / 課税方式 |
 |---------|-------------|-------------------|
@@ -270,7 +270,7 @@ Currently covers **50+ municipalities (63 areas)** across Japan:
 | `fukuoka_city` | Fukuoka City / 福岡市 | Dual tax / 二重課税（県＋市） |
 | `fukuoka_other` | Fukuoka Pref. (other) / 福岡県（その他） | Fixed / 定額制 |
 | `kitakyushu` | Kitakyushu / 北九州市 | Dual tax / 二重課税（県＋市） |
-| `nagasaki` | Nagasaki / 長崎市 | Fixed tiers / 定額段階制 |
+| `nagasaki` | Nagasaki / 長崎市 | Fixed tiers, revised Apr 2027 / 定額段階制（2027年4月改定） |
 | `niseko` | Niseko Town / ニセコ町 | Fixed tiers → 3% from Nov 2026 / 定額段階制→定率3%（2026年11月〜） |
 | `sendai` | Sendai / 仙台市 | Dual tax / 二重課税（県＋市） |
 | `miyagi_other` | Miyagi Pref. (outside Sendai) / 宮城県（仙台市以外） | Fixed / 定額制 |
@@ -325,23 +325,23 @@ Currently covers **50+ municipalities (63 areas)** across Japan:
 | `motobu` | Motobu / 本部町 | Dual percentage (Feb 2027~) / 二重定率（2027年2月〜） |
 | `chatan` | Chatan / 北谷町 | Dual percentage (Feb 2027~) / 二重定率（2027年2月〜） |
 | `nago` | Nago / 名護市 | Dual percentage (Feb 2027~) / 二重定率（2027年2月〜） |
+| `shirahama` | Shirahama / 白浜町（和歌山県） | Fixed 4 tiers (Mar 2027~) / 定額4段階制（2027年3月〜） |
+| `kagoshima` | Kagoshima / 鹿児島市 | Fixed (Apr 2027~) / 定額制（2027年4月〜） |
+| `ibusuki` | Ibusuki / 指宿市 | Fixed (Apr 2027~) / 定額制（2027年4月〜） |
 
 Run `getAreaIds()` for the programmatic list. / `getAreaIds()` で全エリアIDを取得できます。
 
 ### Not yet in the dataset / 未収録（施行日未確定・検討中）
 
-An area is added only once its ordinance is enacted **and** the Minister of Internal Affairs has consented with a fixed start date. As of **2026-09-20** the following are known but not yet included — check before relying on them:
+An area is added only once its ordinance is enacted **and** the Minister of Internal Affairs has consented with a fixed start date. As of **2026-10-04** the following are known but not yet included — check before relying on them:
 
-エリアは、条例が成立し **かつ** 総務大臣の同意により施行日が確定した時点で追加します。**2026年9月20日時点** で把握しているが未収録のもの：
+エリアは、条例が成立し **かつ** 総務大臣の同意により施行日が確定した時点で追加します。**2026年10月4日時点** で把握しているが未収録のもの：
 
 | Jurisdiction / 自治体 | Status / 状況 |
 |---|---|
-| 白浜町 Shirahama (Wakayama) | Ordinance passed 2026-06-16: ¥200 / ¥300 / ¥500 / ¥1,000 by price band (under 12s exempt); targets **2027-03-01**, awaiting MIC consent |
-| 鹿児島市 Kagoshima City | Ordinance passed 2026-06-29: flat ¥200; targets **2027-04-01**, awaiting MIC consent |
-| 大分県 Oita Prefecture | Ordinance passed 2026-06-26: ¥100 / ¥200 / ¥500 / ¥2,000 (under ¥5,000 / to ¥19,999 / to ¥99,999 / ¥100,000+); targets **Jan 2027**, start date to be announced after consent |
-| 長崎市 Nagasaki City (revision) | Passed 2026-03-12: ¥100 under ¥6,000 / ¥300 to ¥19,999 / ¥500 from ¥20,000; targets **2027-04-01**, awaiting MIC consent — current tiers stay in the dataset |
-| 鎌倉市 Kamakura | Flat ¥300 bill in the September 2026 council (vote due 2026-09-30); targets **Oct 2027** |
-| 箱根町 Hakone | Flat ¥350 as Japan's first 法定外普通税; bill due in FY2026, targets **Apr 2028** |
+| 大分県 Oita Prefecture | Ordinance passed 2026-06-26: ¥100 / ¥200 / ¥500 / ¥2,000 (under ¥5,000 / to ¥19,999 / to ¥99,999 / ¥100,000+). **MIC consent 2026-09-30**; start 「令和9年1月以降」 — the date itself is not yet announced, so it is not added yet |
+| 鎌倉市 Kamakura | Flat ¥300 bill in the September 2026 council (vote was due 2026-09-30; result not yet confirmed here); targets **Oct 2027** |
+| 箱根町 Hakone | Ordinance passed 2026-10-02: flat ¥350 as a 法定外普通税 (under-12s and school trips exempt); start within two years of MIC consent (press: **Apr 2028**); awaiting MIC consent |
 | 美瑛町 Biei | Ordinance passed 2025-06-20 but MIC consent stalled; date undecided |
 | Studying / 検討中 | 岡山市 (¥200, FY2027), 御殿場市 (FY2027), 名古屋市, 秋田市, 香川県, 千葉県, 静岡県, 伊勢市, 志摩市, 横浜市 and others — no ordinance yet |
 
@@ -351,9 +351,9 @@ All tax rates are sourced from official municipal government websites. Each `Tax
 
 全税率データは各自治体の公式サイトを出典としています。各 `TaxArea` の `source` フィールドに公式ページへのリンクがあります。詳細は [src/data.ts](./src/data.ts) をご覧ください。
 
-Data is current as of **September 2026** (DATA_VERSION 2026.09, 2026-09-20). Contributions to keep rates up-to-date are welcome.
+Data is current as of **October 2026** (DATA_VERSION 2026.10, 2026-10-04). Contributions to keep rates up-to-date are welcome.
 
-データは **2026年9月時点**（DATA_VERSION 2026.09、2026年9月20日）の情報です。最新情報への更新PRを歓迎します。
+データは **2026年10月時点**（DATA_VERSION 2026.10、2026年10月4日）の情報です。最新情報への更新PRを歓迎します。
 
 ## Contributing / コントリビューション
 

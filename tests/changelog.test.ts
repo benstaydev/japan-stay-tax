@@ -42,8 +42,8 @@ describe("seq 2 — tokyo 2027 revision (MIC consent 2026-06-30)", () => {
 });
 
 describe("DATA_VERSION", () => {
-  it("is bumped to 2026.09 for the Nago/Unzen release", () => {
-    expect(DATA_VERSION).toBe("2026.09");
+  it("is bumped to 2026.10 for the 2026-09-30 consent batch", () => {
+    expect(DATA_VERSION).toBe("2026.10");
   });
 });
 

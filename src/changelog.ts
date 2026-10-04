@@ -102,6 +102,41 @@ export const changelog: ChangelogEntry[] = [
       "https://www.pref.hokkaido.lg.jp/kz/kkd/191976.html",
     ],
   },
+  {
+    seq: 7,
+    releasedAt: "2026-10-04",
+    dataVersion: "2026.10",
+    areaIds: ["kagoshima", "ibusuki", "shirahama"],
+    type: "added",
+    summary: {
+      en: "Three new municipal taxes (Minister of Internal Affairs consent 2026-09-30): Kagoshima City ¥200 flat per person per night from 2027-04-01 (scheduled; exempt school trips); Ibusuki City ¥200 flat from 2027-04-01 (scheduled; exempt children through the March 31 after turning 12, and school trips); Shirahama Town (Wakayama) from 2027-03-01: under ¥10,000 = ¥200, ¥10,000–19,999 = ¥300, ¥20,000–49,999 = ¥500, ¥50,000+ = ¥1,000 (exempt school trips, under-12s, disaster-affected guests). Neither Kagoshima nor Wakayama prefecture has a prefecture-wide tax.",
+      ja: "新税3件を追加（2026年9月30日総務大臣同意）：鹿児島市は2027年4月1日（予定）から1人1泊200円（修学旅行は免除）。指宿市は2027年4月1日（予定）から200円（12歳到達後最初の3月31日までの者・修学旅行は免除）。白浜町（和歌山県）は2027年3月1日から1万円未満200円・1万円以上2万円未満300円・2万円以上5万円未満500円・5万円以上1,000円（修学旅行・12歳未満・被災者は免除）。鹿児島県・和歌山県に県税はない。",
+    },
+    effectiveFrom: null,
+    sources: [
+      "https://www.soumu.go.jp/menu_news/s-news/01zeimu02_02000476.html",
+      "https://www.soumu.go.jp/main_content/001093326.pdf",
+      "https://www.soumu.go.jp/main_content/001093327.pdf",
+      "https://www.soumu.go.jp/main_content/001093325.pdf",
+      "https://www.town.shirahama.wakayama.jp/soshiki/zeimu/kazei/gyomu/syukuhakuzei/4086.html",
+    ],
+  },
+  {
+    seq: 8,
+    releasedAt: "2026-10-04",
+    dataVersion: "2026.10",
+    areaIds: ["nagasaki"],
+    type: "revised",
+    summary: {
+      en: "Nagasaki City: from 2027-04-01 (scheduled) the tiers become under ¥6,000 = ¥100, ¥6,000–19,999 = ¥300, ¥20,000+ = ¥500 per person per night, replacing under ¥10,000 = ¥100 / ¥10,000–19,999 = ¥200 / ¥20,000+ = ¥500 (Minister of Internal Affairs consent 2026-09-30). Exemptions unchanged.",
+      ja: "長崎市：2027年4月1日（予定）から1人1泊6,000円未満100円・6,000円以上2万円未満300円・2万円以上500円に改定（現行は1万円未満100円・1万円以上2万円未満200円・2万円以上500円、2026年9月30日総務大臣同意）。課税免除は変更なし。",
+    },
+    effectiveFrom: "2027-04-01",
+    sources: [
+      "https://www.soumu.go.jp/menu_news/s-news/01zeimu02_02000476.html",
+      "https://www.soumu.go.jp/main_content/001093328.pdf",
+    ],
+  },
 ];
 
 /** Return entries with seq strictly greater than `sinceSeq`, ascending. */

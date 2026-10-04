@@ -5,6 +5,7 @@ import {
   getAreaIds,
   searchAreas,
   getAllAreas,
+  getChangelogSince,
 } from "../src/index.js";
 
 describe("getAreaIds", () => {
@@ -644,9 +645,9 @@ describe("tokyo 2027-04-01 revision (3% rate, ¥13,000 threshold)", () => {
 });
 
 describe("2026-06-30 consent batch — six new municipal taxes", () => {
-  it("adds the six areas (55 → 61; 63 after the 2026-09 update)", () => {
+  it("adds the six areas (55 → 61; 66 after the 2026-10 update)", () => {
     const ids = getAreaIds();
-    expect(ids).toHaveLength(63);
+    expect(ids).toHaveLength(66);
     for (const id of ["tomakomai", "kitahiroshima", "wakkanai", "yamagata", "fujiyoshida", "fujikawaguchiko"]) {
       expect(ids).toContain(id);
     }
@@ -690,9 +691,9 @@ describe("2026-06-30 consent batch — six new municipal taxes", () => {
 });
 
 describe("2026-09 update — Nago (Okinawa) and Unzen (Nagasaki)", () => {
-  it("adds nago and unzen (61 → 63)", () => {
+  it("adds nago and unzen (61 → 63; 66 after the 2026-10 update)", () => {
     const ids = getAreaIds();
-    expect(ids).toHaveLength(63);
+    expect(ids).toHaveLength(66);
     expect(ids).toContain("nago");
     expect(ids).toContain("unzen");
   });
@@ -726,8 +727,45 @@ describe("2026-09 update — Nago (Okinawa) and Unzen (Nagasaki)", () => {
     expect(r.breakdown[0].type).toBe("fixed");
   });
 
-  it("nagasaki keeps its 2023 tiers (revision still awaiting MIC consent)", () => {
-    expect(calculateTax({ areaId: "nagasaki", ratePerNight: 8000, date: "2027-04-01" }).total).toBe(100);
-    expect(calculateTax({ areaId: "nagasaki", ratePerNight: 15000, date: "2027-04-01" }).total).toBe(200);
+  it("nagasaki keeps its 2023 tiers until the revision (consented 2026-09-30) starts on 2027-04-01", () => {
+    expect(calculateTax({ areaId: "nagasaki", ratePerNight: 8000, date: "2027-03-31" }).total).toBe(100);
+    expect(calculateTax({ areaId: "nagasaki", ratePerNight: 15000, date: "2027-03-31" }).total).toBe(200);
+  });
+});
+
+describe("2026-10 update — 2026-09-30 MIC consents", () => {
+  // Source for every figure: the MIC consent documents of 2026-09-30 (soumu.go.jp/main_content/001093325〜001093328.pdf).
+  it("adds kagoshima, ibusuki and shirahama (63 → 66)", () => {
+    const ids = getAreaIds();
+    expect(ids).toHaveLength(66);
+    for (const id of ["kagoshima", "ibusuki", "shirahama"]) expect(ids).toContain(id);
+  });
+
+  it("nagasaki: today's tiers through 2027-03-31, the revised ones from 2027-04-01", () => {
+    const at = (rate: number, date: string) => calculateTax({ areaId: "nagasaki", ratePerNight: rate, date }).total;
+    // before: under ¥10,000 = 100 / ¥10,000–19,999 = 200 / ¥20,000+ = 500
+    expect([at(9999, "2027-03-31"), at(10000, "2027-03-31"), at(20000, "2027-03-31")]).toEqual([100, 200, 500]);
+    // after: under ¥6,000 = 100 / ¥6,000–19,999 = 300 / ¥20,000+ = 500
+    expect([at(5999, "2027-04-01"), at(6000, "2027-04-01"), at(19999, "2027-04-01"), at(20000, "2027-04-01")]).toEqual([100, 300, 300, 500]);
+  });
+
+  it("kagoshima and ibusuki: ¥200 flat from 2027-04-01 at any rate, nothing before", () => {
+    for (const id of ["kagoshima", "ibusuki"]) {
+      expect(calculateTax({ areaId: id, ratePerNight: 8000, date: "2027-03-31" }).total).toBe(0);
+      expect(calculateTax({ areaId: id, ratePerNight: 1000, date: "2027-04-01" }).total).toBe(200);
+      expect(calculateTax({ areaId: id, ratePerNight: 300000, date: "2027-04-01" }).total).toBe(200);
+    }
+  });
+
+  it("shirahama: four tiers from 2027-03-01, at their exact edges", () => {
+    expect(calculateTax({ areaId: "shirahama", ratePerNight: 15000, date: "2027-02-28" }).total).toBe(0);
+    const at = (rate: number) => calculateTax({ areaId: "shirahama", ratePerNight: rate, date: "2027-03-01" }).total;
+    expect([at(9999), at(10000), at(19999), at(20000), at(49999), at(50000)]).toEqual([200, 300, 300, 500, 500, 1000]);
+  });
+
+  it("records the batch in the changelog: seq 7 added, seq 8 nagasaki revised", () => {
+    const [added, revised] = getChangelogSince(6);
+    expect([added.seq, added.type, [...added.areaIds].sort()]).toEqual([7, "added", ["ibusuki", "kagoshima", "shirahama"]]);
+    expect([revised.seq, revised.type, revised.areaIds, revised.effectiveFrom]).toEqual([8, "revised", ["nagasaki"], "2027-04-01"]);
   });
 });
