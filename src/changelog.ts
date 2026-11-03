@@ -137,6 +137,23 @@ export const changelog: ChangelogEntry[] = [
       "https://www.soumu.go.jp/main_content/001093328.pdf",
     ],
   },
+  {
+    seq: 9,
+    releasedAt: "2026-11-03",
+    dataVersion: "2026.11",
+    areaIds: ["oita"],
+    type: "added",
+    summary: {
+      en: "Oita Prefecture: new prefecture-wide tax from 2027-06-01 (start date set by prefectural rule No. 55 of 2026-10-06; Minister of Internal Affairs consent 2026-09-30). Per person per night on the charge excluding meals and consumption tax: under ¥5,000 = ¥100, ¥5,000–19,999 = ¥200, ¥20,000–99,999 = ¥500, ¥100,000+ = ¥2,000. Exempt: school trips and school/nursery curriculum events, foreign diplomats on duty. No municipal taxes in the prefecture.",
+      ja: "大分県：2027年6月1日から県全域で宿泊税を新設（施行期日は大分県規則第55号〔2026年10月6日公布〕、総務大臣同意2026年9月30日）。食事・消費税を除く1人1泊の宿泊料金が5,000円未満100円・5,000円以上2万円未満200円・2万円以上10万円未満500円・10万円以上2,000円。修学旅行等の教育活動（保育所等の行事を含む）と外国大使等の公務は課税免除。県内に市町村の宿泊税はない。",
+    },
+    effectiveFrom: "2027-06-01",
+    sources: [
+      "https://www.pref.oita.jp/site/shukuhakuzei/system.html",
+      "https://www.pref.oita.jp/uploaded/attachment/2278977.pdf",
+      "https://www.soumu.go.jp/menu_news/s-news/01zeimu02_02000476.html",
+    ],
+  },
 ];
 
 /** Return entries with seq strictly greater than `sinceSeq`, ascending. */

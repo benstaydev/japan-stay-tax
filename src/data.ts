@@ -1,7 +1,7 @@
 import type { TaxArea } from "./types.js";
 
-export const DATA_VERSION = "2026.10";
-export const LAST_UPDATED = "2026-10-04";
+export const DATA_VERSION = "2026.11";
+export const LAST_UPDATED = "2026-11-03";
 
 export const taxAreas: TaxArea[] = [
   // ============================================================
@@ -2230,5 +2230,34 @@ export const taxAreas: TaxArea[] = [
     notes:
       "Wakayama Prefecture's first accommodation tax; there is no prefecture-wide tax. Four tiers per person per night with no exempt band: under ¥10,000 = 200 yen, ¥10,000-19,999 = 300 yen, ¥20,000-49,999 = 500 yen, ¥50,000+ = 1,000 yen. Ordinance passed 2026-06-16, Minister of Internal Affairs consent 2026-09-30; the town announces the start as 2027-03-01. Exempt: school-trip participants with their supervisors, children under 12, and people affected by an earthquake or other disaster.",
     source: "https://www.town.shirahama.wakayama.jp/soshiki/zeimu/kazei/gyomu/syukuhakuzei/4086.html",
+  },
+
+  // ============================================================
+  // OITA PREFECTURE (start date fixed 2026-10-06; added 2026-11-03)
+  // ============================================================
+  {
+    id: "oita",
+    name: { en: "Oita Prefecture", ja: "大分県" },
+    prefecture: { en: "Oita", ja: "大分県" },
+    level: "prefecture",
+    taxBase: "per_person",
+    rules: [
+      {
+        authority: { en: "Oita Prefecture", ja: "大分県" },
+        effectiveFrom: "2027-06-01",
+        effectiveUntil: null,
+        type: "fixed",
+        tiers: [
+          { min: 0, max: 4999, amount: 100 },
+          { min: 5000, max: 19999, amount: 200 },
+          { min: 20000, max: 99999, amount: 500 },
+          { min: 100000, max: null, amount: 2000 },
+        ],
+      },
+    ],
+    exemptions: ["school_trips"],
+    notes:
+      "Prefecture-wide tax with no exempt band and no municipal taxes in the prefecture: under ¥5,000 = 100 yen, ¥5,000-19,999 = 200 yen, ¥20,000-99,999 = 500 yen, ¥100,000+ = 2,000 yen per person per night, on the charge excluding meals and consumption tax (tax-inclusive edges ¥5,500 / ¥22,000 / ¥110,000). A room shared by several guests is divided by the number of paying guests (children sleeping free are not taxed). Ordinance passed 2026-06-26, Minister of Internal Affairs consent 2026-09-30; 大分県規則第55号 (2026-10-06) sets the start to 2027-06-01. Exempt: school trips and curriculum school events (incl. nursery/kindergarten events for children 3+ and their supervisors), and foreign diplomats on duty. Day use is not taxed unless it spans midnight for 6 hours or more.",
+    source: "https://www.pref.oita.jp/site/shukuhakuzei/system.html",
   },
 ];

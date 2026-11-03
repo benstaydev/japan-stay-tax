@@ -645,9 +645,9 @@ describe("tokyo 2027-04-01 revision (3% rate, ¥13,000 threshold)", () => {
 });
 
 describe("2026-06-30 consent batch — six new municipal taxes", () => {
-  it("adds the six areas (55 → 61; 66 after the 2026-10 update)", () => {
+  it("adds the six areas (55 → 61; 67 after the 2026-11 update)", () => {
     const ids = getAreaIds();
-    expect(ids).toHaveLength(66);
+    expect(ids).toHaveLength(67);
     for (const id of ["tomakomai", "kitahiroshima", "wakkanai", "yamagata", "fujiyoshida", "fujikawaguchiko"]) {
       expect(ids).toContain(id);
     }
@@ -691,9 +691,9 @@ describe("2026-06-30 consent batch — six new municipal taxes", () => {
 });
 
 describe("2026-09 update — Nago (Okinawa) and Unzen (Nagasaki)", () => {
-  it("adds nago and unzen (61 → 63; 66 after the 2026-10 update)", () => {
+  it("adds nago and unzen (61 → 63; 67 after the 2026-11 update)", () => {
     const ids = getAreaIds();
-    expect(ids).toHaveLength(66);
+    expect(ids).toHaveLength(67);
     expect(ids).toContain("nago");
     expect(ids).toContain("unzen");
   });
@@ -735,9 +735,9 @@ describe("2026-09 update — Nago (Okinawa) and Unzen (Nagasaki)", () => {
 
 describe("2026-10 update — 2026-09-30 MIC consents", () => {
   // Source for every figure: the MIC consent documents of 2026-09-30 (soumu.go.jp/main_content/001093325〜001093328.pdf).
-  it("adds kagoshima, ibusuki and shirahama (63 → 66)", () => {
+  it("adds kagoshima, ibusuki and shirahama (63 → 66; 67 after the 2026-11 update)", () => {
     const ids = getAreaIds();
-    expect(ids).toHaveLength(66);
+    expect(ids).toHaveLength(67);
     for (const id of ["kagoshima", "ibusuki", "shirahama"]) expect(ids).toContain(id);
   });
 
@@ -767,5 +767,36 @@ describe("2026-10 update — 2026-09-30 MIC consents", () => {
     const [added, revised] = getChangelogSince(6);
     expect([added.seq, added.type, [...added.areaIds].sort()]).toEqual([7, "added", ["ibusuki", "kagoshima", "shirahama"]]);
     expect([revised.seq, revised.type, revised.areaIds, revised.effectiveFrom]).toEqual([8, "revised", ["nagasaki"], "2027-04-01"]);
+  });
+});
+
+describe("2026-11 update — Oita Prefecture (start date fixed by 大分県規則第55号)", () => {
+  // Sources: MIC consent 2026-09-30 (01zeimu02_02000476); 大分県規則第55号 (promulgated 2026-10-06)
+  // sets the ordinance's start to 令和9年6月1日; tiers from pref.oita.jp/site/shukuhakuzei/system.html.
+  it("adds oita as a prefecture-wide, per-person area (66 → 67)", () => {
+    const ids = getAreaIds();
+    expect(ids).toHaveLength(67);
+    const oita = getArea("oita")!;
+    expect([oita.level, oita.taxBase, oita.prefecture.ja]).toEqual(["prefecture", "per_person", "大分県"]);
+  });
+
+  it("taxes nothing before 2027-06-01", () => {
+    expect(calculateTax({ areaId: "oita", ratePerNight: 15000, date: "2027-05-31" }).total).toBe(0);
+  });
+
+  it("four tiers from 2027-06-01 on the tax-exclusive per-person charge, at their exact edges", () => {
+    const at = (rate: number) => calculateTax({ areaId: "oita", ratePerNight: rate, date: "2027-06-01" }).total;
+    expect([at(1000), at(4999), at(5000), at(19999), at(20000), at(99999), at(100000), at(500000)])
+      .toEqual([100, 100, 200, 200, 500, 500, 2000, 2000]);
+  });
+
+  it("matches the prefecture's own worked example (twin room ¥20,000: 1 guest ¥500, 2 guests ¥200 each)", () => {
+    expect(calculateTax({ areaId: "oita", ratePerNight: 20000, date: "2027-06-01" }).total).toBe(500);
+    expect(calculateTax({ areaId: "oita", ratePerNight: 10000, date: "2027-06-01" }).total).toBe(200);
+  });
+
+  it("records it in the changelog as seq 9, added, effective 2027-06-01", () => {
+    const [e] = getChangelogSince(8);
+    expect([e.seq, e.type, e.areaIds, e.effectiveFrom, e.dataVersion]).toEqual([9, "added", ["oita"], "2027-06-01", "2026.11"]);
   });
 });
